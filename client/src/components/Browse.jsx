@@ -22,7 +22,6 @@ class Browse extends Component {
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
         this.btnNextClick = this.btnNextClick.bind(this);
         this.btnPrevClick = this.btnPrevClick.bind(this);
-        // this.componentDidMount = this.componentDidMount.bind(this);
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
 
