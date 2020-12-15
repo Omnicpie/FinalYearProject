@@ -70,6 +70,7 @@ class Browse extends Component {
         this.setState({ currentPage: listid});
         this.setPrevAndNextBtnClass(listid);
     }
+
     btnDecrementClick() {
         this.setState({upperPageBound: this.state.upperPageBound - this.state.pageBound});
         this.setState({lowerPageBound: this.state.lowerPageBound - this.state.pageBound});
@@ -77,6 +78,7 @@ class Browse extends Component {
         this.setState({ currentPage: listid});
         this.setPrevAndNextBtnClass(listid);
     }
+
     btnPrevClick() {
         if((this.state.currentPage -1)%this.state.pageBound === 0 ){
             this.setState({upperPageBound: this.state.upperPageBound - this.state.pageBound});
@@ -86,6 +88,7 @@ class Browse extends Component {
         this.setState({ currentPage : listid});
         this.setPrevAndNextBtnClass(listid);
     }
+    
     btnNextClick() {
         if((this.state.currentPage +1) > this.state.upperPageBound ){
             this.setState({upperPageBound: this.state.upperPageBound + this.state.pageBound});
@@ -130,14 +133,17 @@ class Browse extends Component {
                 )
             }
         });
+
         let pageIncrementBtn = null;
         if(pageNumbers.length > upperPageBound){
             pageIncrementBtn = <li className='page-item'><a href='#' className="page-link" onClick={this.btnIncrementClick}> &hellip; </a></li>
         }
+
         let pageDecrementBtn = null;
         if(lowerPageBound >= 1){
             pageDecrementBtn = <li className='page-item'><a href='#' className="page-link" onClick={this.btnDecrementClick}> &hellip; </a></li>
         }
+
         let renderPrevBtn = null;
         if(isPrevBtnActive === 'disabled') {
             renderPrevBtn = <li className={isPrevBtnActive}><span id="btnPrev" className="page-link disabled" style={{color: "grey"}}> Prev </span></li>
@@ -145,6 +151,7 @@ class Browse extends Component {
         else{
             renderPrevBtn = <li className={isPrevBtnActive}><a href='#' id="btnPrev" className="page-link" onClick={this.btnPrevClick}> Prev </a></li>
         }
+
         let renderNextBtn = null;
         if(isNextBtnActive === 'disabled') {
             renderNextBtn = <li className={isNextBtnActive}><span id="btnNext" className="page-link disabled" style={{color: "grey"}}> Next </span></li>
