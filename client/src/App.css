@@ -1,3 +1,9 @@
+html, body {
+  margin: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1.1em;
+}
+
 label {
   display: block;
   margin-top: 10px;
@@ -31,18 +37,22 @@ label {
   border-radius: 50%;
 }
 
-#page-numbers {
-  list-style: none;
-  display: flex;
-}
 
-#page-numbers > li {
-  margin-right: 0.3em;
-  color: blue;
-  user-select: none;
-  cursor: pointer;
+.typeSec{
+  display: flex;
+  justify-content: center;
+  width: 100px;
+}
+.ShopIcon{
+  width: auto;
+  height: 15px;
+  margin: auto;
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
+}
+.pagination{
+  width: max-content;
+  margin: auto;
 }

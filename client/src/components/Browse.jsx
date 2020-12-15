@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Product from "./Product";
 import $ from 'jquery';
+import "bootstrap/dist/css/bootstrap.min.css";
 import CircleLoader from "react-spinners/CircleLoader";
 
 class Browse extends Component {
@@ -35,6 +36,7 @@ class Browse extends Component {
         $("ul li.active").removeClass('active');
         $('ul li#'+this.state.currentPage).addClass('active');
     }
+
     handleClick(event) {
         let listid = Number(event.target.id);
         this.setState({
@@ -44,6 +46,7 @@ class Browse extends Component {
         $('ul li#'+listid).addClass('active');
         this.setPrevAndNextBtnClass(listid);
     }
+
     setPrevAndNextBtnClass(listid) {
         let totalPage = Math.ceil(this.state.products.length / this.state.productsPerPage);
         this.setState({isNextBtnActive: 'disabled'});
@@ -59,6 +62,7 @@ class Browse extends Component {
             this.setState({isPrevBtnActive: ''});
         }
     }
+    
     btnIncrementClick() {
         this.setState({upperPageBound: this.state.upperPageBound + this.state.pageBound});
         this.setState({lowerPageBound: this.state.lowerPageBound + this.state.pageBound});
@@ -97,7 +101,7 @@ class Browse extends Component {
     }
 
     
-      render() {
+    render() {
         const { products, currentPage, productsPerPage,upperPageBound,lowerPageBound,isPrevBtnActive,isNextBtnActive } = this.state;
         // Logic for displaying current products
         const indexOfLastTodo = currentPage * productsPerPage;
@@ -106,69 +110,65 @@ class Browse extends Component {
 
         const renderproducts = currentproducts.map((product) => {
             return <Product product={product}/>;
-          });
+        });
 
         // Logic for displaying page numbers
         const pageNumbers = [];
         for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
-          pageNumbers.push(i);
+            pageNumbers.push(i);
         }
 
         const renderPageNumbers = pageNumbers.map(number => {
             if(number === 1 && currentPage === 1){
                 return(
-                    <li key={number} className='active' id={number}><a href='#' id={number} onClick={this.handleClick}>{number}</a></li>
+                    <li key={number} className='page-item active' id={number}><a href='#' onid={number} className="page-link" onClick={this.handleClick}>{number}</a></li>
                 )
             }
             else if((number < upperPageBound + 1) && number > lowerPageBound){
                 return(
-                    <li key={number} id={number}><a href='#' id={number} onClick={this.handleClick}>{number}</a></li>
+                    <li key={number} className="page-item"id={number}><a href='#' className="page-link" id={number} onClick={this.handleClick}>{number}</a></li>
                 )
             }
         });
         let pageIncrementBtn = null;
         if(pageNumbers.length > upperPageBound){
-            pageIncrementBtn = <li className=''><a href='#' onClick={this.btnIncrementClick}> &hellip; </a></li>
+            pageIncrementBtn = <li className='page-item'><a href='#' className="page-link" onClick={this.btnIncrementClick}> &hellip; </a></li>
         }
         let pageDecrementBtn = null;
         if(lowerPageBound >= 1){
-            pageDecrementBtn = <li className=''><a href='#' onClick={this.btnDecrementClick}> &hellip; </a></li>
+            pageDecrementBtn = <li className='page-item'><a href='#' className="page-link" onClick={this.btnDecrementClick}> &hellip; </a></li>
         }
         let renderPrevBtn = null;
         if(isPrevBtnActive === 'disabled') {
-            renderPrevBtn = <li className={isPrevBtnActive}><span id="btnPrev"> Prev </span></li>
+            renderPrevBtn = <li className={isPrevBtnActive}><span id="btnPrev" className="page-link disabled" style={{color: "grey"}}> Prev </span></li>
         }
         else{
-            renderPrevBtn = <li className={isPrevBtnActive}><a href='#' id="btnPrev" onClick={this.btnPrevClick}> Prev </a></li>
+            renderPrevBtn = <li className={isPrevBtnActive}><a href='#' id="btnPrev" className="page-link" onClick={this.btnPrevClick}> Prev </a></li>
         }
         let renderNextBtn = null;
         if(isNextBtnActive === 'disabled') {
-            renderNextBtn = <li className={isNextBtnActive}><span id="btnNext"> Next </span></li>
+            renderNextBtn = <li className={isNextBtnActive}><span id="btnNext" className="page-link disabled" style={{color: "grey"}}> Next </span></li>
         }
         else{
-            renderNextBtn = <li className={isNextBtnActive}><a href='#' id="btnNext" onClick={this.btnNextClick}> Next </a></li>
+            renderNextBtn = <li className={isNextBtnActive}><a href='#' id="btnNext" className="page-link" onClick={this.btnNextClick}> Next </a></li>
         }
         return (
-          <div>
-              <CircleLoader
-          css={"display: block;margin: 0 auto;border-color: red;"}
-          size={150}
-          color={"#123abc"}
-          loading={this.state.loading}
-        /><p className={this.state.loading ? '': 'hidden'}>Loading</p>
-              <ul>
-              {renderproducts}
-            </ul>
-            <ul id="page-numbers" className="pagination" className={this.state.loading ? 'hidden': ''}>
-              {renderPrevBtn}
-              {pageDecrementBtn}
-              {renderPageNumbers}
-              {pageIncrementBtn}
-              {renderNextBtn}
-            </ul>
-          </div>
+            <div>
+                <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
+                <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
+                <ul>
+                    {renderproducts}
+                </ul>
+                <ul className={this.state.loading ? 'hidden': 'pagination'}>
+                    {renderPrevBtn}
+                    {pageDecrementBtn}
+                    {renderPageNumbers}
+                    {pageIncrementBtn}
+                    {renderNextBtn}
+                </ul>
+            </div>
         );
-      }
     }
+}
  
 export default Browse;
