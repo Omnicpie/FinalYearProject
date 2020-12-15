@@ -1,0 +1,38 @@
+import axios from "axios";
+
+const API_URL = "http://100.66.128.60:8080/api/auth/";
+
+class AuthService {
+  login(display_name, password) {
+    return axios
+      .post(API_URL + "signin", {
+        display_name,
+        password
+      })
+      .then(response => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+
+        return response.data;
+      });
+  }
+
+  logout() {
+    localStorage.removeItem("user");
+  }
+
+  register(display_name, email, password) {
+    return axios.post(API_URL + "signup", {
+      display_name,
+      email,
+      password
+    });
+  }
+
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('user'));;
+  }
+}
+
+export default new AuthService();
