@@ -42,7 +42,7 @@ class App extends Component {
 		return (
 			<div>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<Link to={"/"} className="navbar-brand">Eshop</Link>
+					<Link to={"/"} className="navbar-brand"><img src="../EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
 					<div className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link to={"/browse"} className="nav-link">Browse</Link>

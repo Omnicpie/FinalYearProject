@@ -112,7 +112,7 @@ class Browse extends Component {
         const currentproducts = products.slice(indexOfFirstTodo, indexOfLastTodo);
 
         const renderproducts = currentproducts.map((product) => {
-            return <Product product={product}/>;
+            return <Product key={product.url} product={product}/>;
         });
 
         // Logic for displaying page numbers
