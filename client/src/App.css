@@ -56,3 +56,7 @@ label {
   width: max-content;
   margin: auto;
 }
+.product{
+  color: black !important;
+  text-decoration: none;
+}

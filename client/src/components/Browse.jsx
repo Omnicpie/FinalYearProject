@@ -10,6 +10,17 @@ class Browse extends Component {
         this.state = {
             loading: true,
             products: [],
+            refine: {
+                term: "hi",
+                shops: {
+                    asda : "1",
+                    coop: "1",
+                    tesco: "1",
+                    aldi: "1",
+                    sains: "1"
+                },
+                orderby: "product_name"
+            },
             currentPage: 1,
             productsPerPage: 100,
             upperPageBound: 7,
@@ -27,7 +38,7 @@ class Browse extends Component {
     }
 
     callAPI(){
-        fetch("http://100.66.128.60:8080/api/browse")
+        fetch("http://100.66.128.60:8080/api/browse", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.refine)})
             .then(res=> res.json())
             .then(res => this.setState({ loading:false, products: res }));
     }

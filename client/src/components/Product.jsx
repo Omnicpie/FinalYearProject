@@ -18,16 +18,17 @@ class Product extends Component {
 
     render() {
         return (
+            <a href={this.props.product.url} className="product">
             <div style={{ display: 'flex', width: '60%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
                 <div className="typeSec">
-                    <img src={this.getShop()} alt={this.getShop()} className="ShopIcon"/>
+                    <img src={this.getShop()} alt={this.props.product.shop} className="ShopIcon"/>
                 </div>
                 <div style={{ borderLeft: '1px solid #dbdbdb', marginRight: '20px' }}></div>
                 <div className="InfoSec">
                     <p>Price: {this.props.product.product_price}</p>
                     <p>{this.props.product.product_name}</p>
                 </div>
-            </div>
+            </div></a>
         );
     }
 }
