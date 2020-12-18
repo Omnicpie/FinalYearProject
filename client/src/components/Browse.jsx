@@ -201,7 +201,7 @@ class Browse extends Component {
             renderNextBtn = <li className={isNextBtnActive}><a href='#' id="btnNext" className="page-link" onClick={this.btnNextClick}> Next </a></li>
         }
         return (
-            <div >
+            <div style={{width:"100%"}}>
                 <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
                 <div style={{display: "flex"}}>

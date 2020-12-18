@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import { FaUserCircle } from "react-icons/fa";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -40,7 +40,7 @@ class App extends Component {
 		const { currentUser } = this.state;
 
 		return (
-			<div>
+			<div style={{height: "100vh",display: "flex",flexDirection: "column"}}>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
 					<Link to={"/"} className="navbar-brand"><img src="../EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
 					<div className="navbar-nav mr-auto">
@@ -52,11 +52,11 @@ class App extends Component {
 
 				{currentUser ? (
 					<div className="navbar-nav ml-auto">
-						<li className="nav-item">
-							<Link to={"/profile"} className="nav-link">{currentUser.display_name}</Link>
+						<li className="nav-item" style={{display: "flex",justifyContent: "center",flexDirection: "column"}}>
+							<Link to={"/profile"} style={{display: "flex", color: "#fff"}}><FaUserCircle style={{height: "1.1em", width: "1.1em"}}/></Link>
 						</li>
 						<li className="nav-item">
-							<a href="/login" className="nav-link" onClick={this.logOut}>LogOut</a>
+							<a href="/login" className="nav-link" onClick={this.logOut}>Logout</a>
 						</li>
 					</div>
 				) : (
@@ -71,7 +71,7 @@ class App extends Component {
 					</div>
 				)}
 				</nav>
-				<div className="">
+				<div className="" style={{display: "flex", flexGrow: "2", justifyContent: "center"}}>
 					<Switch>
 						<Route exact path={["/", "/home"]} component={Home} />
 						<Route exact path="/login" component={Login} />
