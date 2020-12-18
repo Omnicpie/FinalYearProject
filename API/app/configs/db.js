@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "100.66.128.60",
+    HOST: "localhost",
     USER: "api",
     PASSWORD: "eshopAPI%pass1",
     DB: "eshop",

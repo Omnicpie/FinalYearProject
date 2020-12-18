@@ -8,15 +8,11 @@ module.exports = function(app) {
       );
       next();
     });
-
-    app.get("/api/browse/:term", (req, res) => {
-        console.log(req.params.term)
-        let q = 'CALL browseProducts(1,1,1,1,1, "%' + req.params.term + '%")';
-        db.sequelize.query(q).then(out => res.send(out));
-    });
     
-    app.get("/api/browse", (req, res) => {
-        db.sequelize.query('CALL browseProducts(1,1,1,1,1, "%%")').then(out => res.send(out));
+    app.post("/api/browse", (req, res) => {
+        console.log(req.body);
+        let query = 'CALL browseProducts('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+        db.sequelize.query(query).then(out => res.send(out));
     });
 
     
