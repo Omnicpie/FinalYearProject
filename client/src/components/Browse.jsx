@@ -132,7 +132,6 @@ class Browse extends Component {
         }, () =>{
             console.log(this.state)
             this.callAPI();
-            this.forceUpdate();
         });
         event.preventDefault();
     }
