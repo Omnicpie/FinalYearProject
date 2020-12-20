@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://100.66.128.60:8080/api/test/';
+const API_URL = 'https://eshopapi.ddns.net/api/test/';
 
 class UserService {
   getPublicContent() {

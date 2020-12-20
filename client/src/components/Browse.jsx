@@ -42,7 +42,7 @@ class Browse extends Component {
 
     callAPI(){
         this.setState({reloading: true});
-        fetch("http://100.66.128.60:8080/api/browse", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.refine)})
+        fetch("https://eshopapi.ddns.net/api/browse", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.refine)})
             .then(res=> res.json())
             .then(res => this.setState({ loading:false,reloading:false, products: res }));
     }

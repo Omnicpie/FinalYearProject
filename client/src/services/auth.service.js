@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://100.66.128.60:8080/api/auth/";
+const API_URL = "https://eshopapi.ddns.net/api/auth/";
 
 class AuthService {
   login(display_name, password) {
