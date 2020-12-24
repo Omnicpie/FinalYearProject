@@ -10,7 +10,8 @@ module.exports = function(app) {
     });
     
     app.post("/api/search", (req, res) => {
-        res.send("a search was made");
+      let query = 'CALL browseProducts(1,1,1,1,1,"%'+req.body.term+'%")';
+      db.sequelize.query(query).then(out => res.send(out.slice(0,25)));
     });
 
     
