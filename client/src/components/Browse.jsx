@@ -3,6 +3,9 @@ import Product from "./Product";
 import $ from 'jquery';
 import "bootstrap/dist/css/bootstrap.min.css";
 import CircleLoader from "react-spinners/CircleLoader";
+import MediaQuery from "react-responsive";
+import BrowseRefinePC from "./BrowseRefinePC";
+import BrowseRefineMobile from "./BrowseRefineMobile";
 
 class Browse extends Component {
     constructor() {
@@ -37,7 +40,6 @@ class Browse extends Component {
         this.btnPrevClick = this.btnPrevClick.bind(this);
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
         this.submitRefiner = this.submitRefiner.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     callAPI(){
@@ -115,7 +117,6 @@ class Browse extends Component {
     }
 
     submitRefiner(event){
-        console.log(event)
         let form = event.target;
         this.setState({
             refine: {
@@ -130,15 +131,9 @@ class Browse extends Component {
                 orderby: "product_name"
             },
         }, () =>{
-            console.log(this.state)
             this.callAPI();
         });
         event.preventDefault();
-    }
-
-    handleChange(event){
-
-
     }
 
     componentDidMount(){
@@ -151,6 +146,8 @@ class Browse extends Component {
         const indexOfLastTodo = currentPage * productsPerPage;
         const indexOfFirstTodo = indexOfLastTodo - productsPerPage;
         const currentproducts = products.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        
 
         const renderproducts = currentproducts.map((product) => {
             return <Product key={product.url} product={product}/>;
@@ -204,22 +201,14 @@ class Browse extends Component {
             <div style={{width:"100%"}}>
                 <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
-                <div style={{display: "flex"}}>
-                    <div style={{width: "15%", display: "flex", float: "left", flexGrow: "2", flexDirection: "column"}}>
-                        <form className={this.state.loading ? 'hidden': ''} onSubmit={this.submitRefiner}>
-                            <input type="text" name="term" onChange={this.handleChange}></input>
-                            <div className="shops">
-                                <label htmlFor="asda">Asda</label><input type="checkbox" name="asda" onChange={this.handleChange}></input>
-                                <label htmlFor="aldi">Aldi</label><input type="checkbox" name="aldi" onChange={this.handleChange}></input>
-                                <label htmlFor="tesco">Tesco</label><input type="checkbox" name="tesco" onChange={this.handleChange}></input>
-                                <label htmlFor="sains">Sainsburys</label><input type="checkbox" name="sains" onChange={this.handleChange}></input>
-                                <label htmlFor="coop">CoOp</label><input type="checkbox" name="coop" onChange={this.handleChange}></input>
-                                <br/>
-                                <input type="submit" value="Update Browse"></input>
-                            </div>
-                        </form>
-                    </div>
-                    <ul style={{width: "80%"}} className={this.state.loading ? 'hidden': ''}>
+                <div className="browseProds">
+                    <MediaQuery minWidth={1224}>
+                        <BrowseRefinePC loading={this.state.loading} products={this.state.products.length} submitRefiner={this.submitRefiner}/>
+                    </MediaQuery>
+                    <MediaQuery maxWidth={1224}>
+                        <BrowseRefineMobile  loading={this.state.loading} products={this.state.products.length} submitRefiner={this.submitRefiner}/>
+                    </MediaQuery>
+                    <ul className={this.state.loading ? 'hidden': 'xyz'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.reloading}/>
                         <div className={this.state.reloading ? 'hidden': ''}>{renderproducts}</div>
                     </ul>
