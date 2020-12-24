@@ -11,6 +11,8 @@ import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import Browse from "./components/Browse";
+import SearchResult from "./components/SearchResult";
+import NotFound from "./components/NotFound";
 
 class App extends Component {
   	constructor(props) {
@@ -91,9 +93,11 @@ class App extends Component {
 						<Route exact path={["/", "/home"]} component={Home}/>
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
+						<Route path="/search" component={SearchResult} />
 						<Route exact path="/profile" component={Profile} />
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
+						<Route component={NotFound} />
 					</Switch>
 				</div>
 			</div>
