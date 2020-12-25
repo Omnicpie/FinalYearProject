@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
-import { useHistory } from 'react-router-dom';
 
 
 class Search extends Component {
@@ -14,13 +13,15 @@ class Search extends Component {
 
     submit(event){
         let term = event.target[0].value
-
+        this.props.history.push("/search/"+term);
+        this.props.notSearch();
+        event.preventDefault();
     }
 
     render() { 
         return ( 
             <div>
-                <form action="/search" method="#" role="search" onSubmit={this.submit}>
+                <form action="#" method="#" role="search" onSubmit={this.submit}>
                     <div className="input-group">
                         <input className="form-control form-control-search" placeholder="Search for products or use the navigation above. . ." name="srch-term" id="ed-srch-term" type="text"/>
                         <div className="input-btn">

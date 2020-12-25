@@ -11,7 +11,6 @@ export default class Home extends Component {
 			content: ""
 		};
 	}
-
 	componentDidMount() {
 		UserService.getPublicContent().then(
 			response => {
@@ -34,7 +33,7 @@ export default class Home extends Component {
 		return (
 			<div className="container" style={{display: "flex",justifyContent: "center",margin: "auto", padding: "60px 15px",  background: "rgba(33, 37, 41, 0.7)"}}>
 				<header className="" style={{width: "100%"}}>
-					<Search/>
+					<Search history={this.props.history} notSearch={this.props.notSearch}/>
 				</header>
 			</div>
 		);

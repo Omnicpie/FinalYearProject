@@ -22,26 +22,25 @@ class SearchResult extends Component {
 
 
     componentDidMount(){
-        var urlParams = new URLSearchParams(window.location.search);
-        let term = urlParams.get("srch-term");
-        console.log(term)
-        this.setState({search: {term: term}}, () => {
+        console.log(this.props.match.params.term)
+        this.setState({search: {term: this.props.match.params.term}}, () => {
             this.callAPI();
         });
     }
     render() {
         const { results } = this.state;
 
-        const renderproducts = results.map((result) => {
-            return <Product key={result.url} product={result}/>;
+        const renderproducts = results.map((result, index) => {
+            return <Product key={result.url} product={result} index={index+1}/>;
         });
         
         return ( 
             <div style={{width:"100%"}}>
                 <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
+                <br className={this.state.loading ? 'hidden': 'xyx'}/><h1 className={this.state.loading ? 'hidden': ''} style={{textAlign: "center"}}>Search Results</h1><hr className={this.state.loading ? 'hidden': ''}/>
                 <div className="browseProds">
-                    <ul className={this.state.loading ? 'hidden': 'xyz'}>
+                    <ul className={this.state.loading ? 'hidden': 'xyx'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.reloading}/>
                         <div className={this.state.reloading ? 'hidden': ''}>{renderproducts}</div>
                     </ul>

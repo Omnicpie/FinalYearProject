@@ -120,6 +120,10 @@ label {
 .browseProds{
   display: flex;
 }
+.xyx{
+  width:100%;
+  padding:0;
+}
 
 @media screen and (max-width:1224px){
   .xyz{width:100%}

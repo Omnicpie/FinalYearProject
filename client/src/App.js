@@ -90,10 +90,10 @@ class App extends Component {
 				</nav>
 				<div className={this.state.search} style={{display: "flex", flexGrow: "2", justifyContent: "center"}}>
 					<Switch>
-						<Route exact path={["/", "/home"]} component={Home}/>
+						<Route exact path={["/", "/home"]} render={props => <Home notSearch={this.notSearch} history={props.history} location={props.location} match={props.match} />}/>
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
-						<Route path="/search" component={SearchResult} />
+						<Route path="/search/:term" component={SearchResult} />
 						<Route exact path="/profile" component={Profile} />
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
