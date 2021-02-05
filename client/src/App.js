@@ -59,7 +59,7 @@ class App extends Component {
 		return (
 			<div style={{height: "100vh",display: "flex",flexDirection: "column"}}>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<Link to={"/"} className="navbar-brand" onClick={this.search}><img src="../EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
+					<Link to={"/"} className="navbar-brand" onClick={this.search}><img src="EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
 					<div className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link to={"/browse"} className="nav-link" onClick={this.notSearch}>Browse</Link>
