@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import CornerRibbon from "react-corner-ribbon";
 
-class Product extends Component {
+class ProductTop extends Component {
     state = {
         shops: {
             "asda": "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/Asda_logo.svg/300px-Asda_logo.svg.png",
@@ -19,7 +20,8 @@ class Product extends Component {
     render() {
         return (
             <a href={this.props.product.url} className="product">
-            <div style={{ display: 'flex', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
+            <div style={{ display: 'flex', position: 'relative', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
+                <CornerRibbon position="top-left" fontColor="white" backgroundColor="green" style={{fontSize: "10px"}}>Best Value</CornerRibbon>
                 <div className="typeSec">
                     <img src={this.getShop()} alt={this.props.product.shop} className="ShopIcon"/>
                 </div>
@@ -35,4 +37,4 @@ class Product extends Component {
 
 
 
-export default Product;
+export default ProductTop;

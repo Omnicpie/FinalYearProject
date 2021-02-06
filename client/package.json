@@ -11,6 +11,7 @@
     "classnames": "^2.2.6",
     "jquery": "^3.5.1",
     "react": "^17.0.1",
+    "react-corner-ribbon": "0.0.3",
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
     "react-responsive": "^8.2.0",

@@ -59,6 +59,7 @@ label {
 .product{
   color: black !important;
   text-decoration: none;
+  position: relative;
 }
 .form-group {
     margin:0;
@@ -77,6 +78,9 @@ label {
     height: auto;
     border-radius: 50px 0  0 50px !important;
 }
+
+
+
 .form-control-search :focus {
 	-webkit-box-shadow: none;
 	box-shadow: none;
