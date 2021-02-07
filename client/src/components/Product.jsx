@@ -34,7 +34,7 @@ class Product extends Component {
     render() {
         return (
             <a href={this.props.product.url} className="product">
-            <div style={{ display: 'flex', position: 'relative', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
+            <div className="product2" style={{ display: 'flex', position: 'relative', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
                 {this.findRibbon()}
                 <div className="typeSec">
                     <img src={this.getShop()} alt={this.props.product.shop} className="ShopIcon"/>

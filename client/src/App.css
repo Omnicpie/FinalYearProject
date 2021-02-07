@@ -55,6 +55,8 @@ label {
 .pagination{
   width: max-content;
   margin: auto;
+  max-width: 100%;
+  overflow: clip;
 }
 .product{
   color: black !important;
@@ -132,6 +134,7 @@ label {
 @media screen and (max-width:1224px){
   .xyz{width:100%}
   .browseProds{display: block;}
+  .product2{width: 100% !important;}
 }
 
 .form-visable{
