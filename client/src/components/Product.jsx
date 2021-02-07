@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CornerRibbon from "react-corner-ribbon";
 
 class Product extends Component {
     state = {
@@ -16,17 +17,33 @@ class Product extends Component {
         return this.state.shops[shop]
     }
 
+    findRibbon(){
+        var index = this.props.index;
+        switch (index) {
+            case 1:
+                return <CornerRibbon position="top-left" fontColor="white" backgroundColor="#D6AF36" style={{fontSize: "10px"}}>Best Value</CornerRibbon>;
+            case 2:
+                return <CornerRibbon position="top-left" fontColor="white" backgroundColor="#b4b4b4" style={{fontSize: "10px"}}>2nd</CornerRibbon>
+            case 3:
+                return <CornerRibbon position="top-left" fontColor="white" backgroundColor="#6a3805" style={{fontSize: "10px"}}>3rd</CornerRibbon>
+            default:
+                return;
+        }
+    }
+
     render() {
         return (
             <a href={this.props.product.url} className="product">
-            <div style={{ display: 'flex', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
+            <div style={{ display: 'flex', position: 'relative', width: '80%', margin: 'auto', border: '1px outset black', borderCollapse: 'collapse' }}>
+                {this.findRibbon()}
                 <div className="typeSec">
                     <img src={this.getShop()} alt={this.props.product.shop} className="ShopIcon"/>
                 </div>
                 <div style={{ borderLeft: '1px solid #dbdbdb', marginRight: '20px' }}></div>
                 <div className="InfoSec">
-                    <p>Price: {this.props.product.product_price}</p>
+                    
                     <p>{this.props.product.product_name}</p>
+                    <p style={{fontSize: "0.8em"}}>Price: {this.props.product.product_price}</p>
                 </div>
             </div></a>
         );

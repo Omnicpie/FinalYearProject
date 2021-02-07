@@ -31,16 +31,8 @@ class SearchResult extends Component {
     render() {
         const { results } = this.state;
 
-        const renderTop = results.map((result, index) => {
-            if(index == 0){
-                return <ProductTop key={result.url} product={result} index={index+1}/>;
-            }
-        });
-
         const renderproducts = results.map((result, index) => {
-            if(index != 0){
-                return <Product key={result.url} product={result} index={index+1}/>;
-            }
+            return <Product key={result.url} product={result} index={index+1}/>;
         });
         
         return ( 
@@ -52,7 +44,7 @@ class SearchResult extends Component {
                     <ul className={this.state.loading ? 'hidden': 'xyx'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.reloading}/>
                         
-                        <div className={this.state.reloading ? 'hidden': ''}>{renderTop}</div>
+                        {/*<div className={this.state.reloading ? 'hidden': ''}>{renderTop}</div>
                         {/* whenClicked is a property not an event, per se. <br className={this.state.loading ? 'hidden': 'xyx'}/>
                         <br className={this.state.loading ? 'hidden': 'xyx'}/>
                         <h1 className={this.state.loading ? 'hidden': ''} style={{textAlign: "center"}}>Other Results</h1><hr className={this.state.loading ? 'hidden': ''}/>*/}
