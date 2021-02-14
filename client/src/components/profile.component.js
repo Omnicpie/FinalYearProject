@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
 export default class Profile extends Component {
@@ -43,6 +43,7 @@ export default class Profile extends Component {
 					<h3>
 						<strong>{currentUser.display_name}</strong>'s Profile
 					</h3>
+					<Link to="/settings" className="button">Edit Settings</Link>
 				</header>
 				<hr/>
 			</div>: null}

@@ -1,9 +1,42 @@
+[data-theme="light"]{
+  --background-1: #f0f2f5;
+  --background-2: #D7D7D7;
+  --background-3: #65676B;
+  --accent-1: rgb(131, 17, 131);
+  --accent-1-025: rgba(131, 17, 131,0.25);
+  --accent-2: rgb(179, 152, 5);
+  --text-1: black;
+  --text-2: white;
+}
+[data-theme="dark"]{
+  --background-1: #18191A;
+  --background-2: #242526;
+  --background-3: #65676B;
+  --accent-1: rgb(131, 17, 131);
+  
+  --accent-1-025: rgba(131, 17, 131,0.25);
+  --accent-2: rgb(179, 152, 5);
+  --text-1: white;
+  --text-2: black;
+}
+
 html, body {
   margin: 0;
   font-family: 'Roboto', Arial, sans-serif;
   font-size: 1.1em;
+  background-color: var(--background-1);
+  color: var(--text-1);
 }
-
+.button{
+  background-color: var(--background-2);
+  color: var(--text-1);
+  border: 10px solid var(--background-2);
+  border-radius: 5px;
+}
+.button:hover{
+  color: var(--accent-1);
+  text-decoration: none;
+}
 label {
   display: block;
   margin-top: 10px;
@@ -12,6 +45,19 @@ label {
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+}
+.navcolour{
+  background-color: var(--background-2);
+}
+.form-control:focus{
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 .2rem var(--accent-1-025);
+}
+.nav-link{
+  color: var(--text-1) !important;
+}
+.nav-link:hover{
+  color: var(--accent-1) !important;
 }
 
 .card {
@@ -59,7 +105,7 @@ label {
   overflow: clip;
 }
 .product{
-  color: black !important;
+  color: var(--text-1) !important;
   text-decoration: none;
   position: relative;
 }
@@ -81,7 +127,9 @@ label {
     border-radius: 50px 0  0 50px !important;
 }
 
-
+.jumbotron{
+  background:none
+}
 
 .form-control-search :focus {
 	-webkit-box-shadow: none;
@@ -155,3 +203,60 @@ label {
   border: 1px solid grey;
   border-collapse: collapse;
 }
+
+
+
+/*Simple css to style it like a toggle switch*/
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+.theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-switch input {
+  display:none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 26px;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-1);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import CircleLoader from "react-spinners/CircleLoader";
 import Product from "./Product";
-import ProductTop from "./ProductTop";
 
 class SearchResult extends Component {
     state = { 
@@ -17,13 +16,16 @@ class SearchResult extends Component {
         this.setState({reloading: true});
         fetch("https://eshopapi.ddns.net/api/search", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.search)})
             .then(res => res.json())
-            .then(res => this.setState({ loading:false,reloading:false, results: res}))
-            .catch(err => this.setState({loading:false,reloading:false,results: [{url: "", product_name: "No Products Found for that name", product_price: "", product_additionals: "Search again for more results"}]}));
+            .then(res => {
+                this.setState({ loading:false,reloading:false, results: res})
+            })
+            .catch(err => {
+                this.setState({loading:false,reloading:false,results: [{url: "", product_name: "No Products Found for that name", product_price: "", product_additionals: "Search again for more results"}]})
+            });
     }
 
 
     componentDidMount(){
-        console.log(this.props.match.params.term)
         this.setState({search: {term: this.props.match.params.term}}, () => {
             this.callAPI();
         });

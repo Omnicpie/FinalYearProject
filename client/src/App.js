@@ -13,6 +13,7 @@ import BoardUser from "./components/board-user.component";
 import Browse from "./components/Browse";
 import SearchResult from "./components/SearchResult";
 import NotFound from "./components/NotFound";
+import Settings from "./components/Settings";
 
 class App extends Component {
   	constructor(props) {
@@ -29,7 +30,7 @@ class App extends Component {
 
   	componentDidMount() {
     	const user = AuthService.getCurrentUser();
-		console.log(window.location.href);
+		this.getTheme();
 		if(window.location.pathname === "/" || window.location.pathname === "/home"){
 			this.setState({search: "Search"})
 		}
@@ -42,6 +43,16 @@ class App extends Component {
 
 	notSearch(){
 		this.setState({search: ""});
+	}
+
+	getTheme(){
+		let x = localStorage.getItem("theme");
+		if(x === null){
+			document.documentElement.setAttribute('data-theme', 'light');
+		}
+		else{
+			document.documentElement.setAttribute('data-theme', x);
+		}
 	}
 
 	search(){
@@ -58,7 +69,7 @@ class App extends Component {
 
 		return (
 			<div style={{height: "100vh",display: "flex",flexDirection: "column"}}>
-				<nav className="navbar navbar-expand navbar-dark bg-dark">
+				<nav className="navbar navbar-expand navcolour">
 					<Link to={"/"} className="navbar-brand" onClick={this.search}><img src="EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
 					<div className="navbar-nav mr-auto">
 						<li className="nav-item">
@@ -70,7 +81,7 @@ class App extends Component {
 				{currentUser ? (
 					<div className="navbar-nav ml-auto">
 						<li className="nav-item" style={{display: "flex",justifyContent: "center",flexDirection: "column"}}>
-							<Link to={"/profile"} onClick={this.notSearch} style={{display: "flex", color: "#fff"}}><FaUserCircle style={{height: "1.1em", width: "1.1em"}}/></Link>
+							<Link to={"/profile"} onClick={this.notSearch} style={{display: "flex", color: "var(--text-1)"}}><FaUserCircle style={{height: "1.1em", width: "1.1em"}}/></Link>
 						</li>
 						<li className="nav-item">
 							<a href="/login" className="nav-link" onClick={this.logOut}>Logout</a>
@@ -95,6 +106,7 @@ class App extends Component {
 						<Route exact path="/register" component={Register} />
 						<Route path="/search/:term" component={SearchResult} />
 						<Route exact path="/profile" component={Profile} />
+						<Route exact path="/settings" component={Settings} />
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
 						<Route component={NotFound} />

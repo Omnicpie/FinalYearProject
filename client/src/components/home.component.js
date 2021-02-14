@@ -15,7 +15,7 @@ export default class Home extends Component {
 
 	render() {
 		return (
-			<div className="container" style={{display: "flex",justifyContent: "center",margin: "auto", padding: "60px 15px",  background: "rgba(33, 37, 41, 0.7)"}}>
+			<div className="container" style={{display: "flex",justifyContent: "center",margin: "auto", padding: "60px 15px",  background: "var(--background-2)"}}>
 				<header className="" style={{width: "100%"}}>
 					<Search history={this.props.history} notSearch={this.props.notSearch}/>
 				</header>
