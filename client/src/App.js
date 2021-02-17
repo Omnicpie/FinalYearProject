@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { FaUserCircle } from "react-icons/fa";
 import AuthService from "./services/auth.service";
+import MediaQuery from "react-responsive";
 
 import Login from "./components/login.component";
 import Register from "./components/register.component";
@@ -14,6 +14,9 @@ import Browse from "./components/Browse";
 import SearchResult from "./components/SearchResult";
 import NotFound from "./components/NotFound";
 import Settings from "./components/Settings";
+import NavPC from "./components/NavPC";
+import NavMobile from "./components/NavMobile";
+import NavMobile2 from "./components/NavMobile2";
 
 class App extends Component {
   	constructor(props) {
@@ -24,8 +27,10 @@ class App extends Component {
 
     	this.state = {
 			  currentUser: undefined,
-			  search: ""
+			  search: "",
+			  open: true
 		};
+		this.toggleMenu = this.toggleMenu.bind(this);
   	}
 
   	componentDidMount() {
@@ -43,6 +48,9 @@ class App extends Component {
 
 	notSearch(){
 		this.setState({search: ""});
+		if(this.state.open === false){
+			this.toggleMenu()
+		}
 	}
 
 	getTheme(){
@@ -57,48 +65,44 @@ class App extends Component {
 
 	search(){
 		this.setState({search: "Search"});
+		if(this.state.open === false){
+			this.toggleMenu()
+		}
 	}
 
   	logOut() {
+		if(this.state.open === false){
+			this.toggleMenu()
+		}
 		this.setState({search: ""});
 		AuthService.logout();
   	}
+
+	toggleMenu(){
+        if(this.state.open){
+            this.setState({open: false})
+        }
+        else{
+            this.setState({open: true})
+        }
+    }
 
   	render() {
 		const { currentUser } = this.state;
 
 		return (
-			<div style={{height: "100vh",display: "flex",flexDirection: "column"}}>
+			<div style={{height: "100vh",display: "flex",flexDirection: "column"}} className={this.state.open ? "" : "hide-content"}>
 				<nav className="navbar navbar-expand navcolour">
-					<Link to={"/"} className="navbar-brand" onClick={this.search}><img src="EshopLogo1.png" alt="Eshop Logo" style={{height: "40px"}}></img></Link>
-					<div className="navbar-nav mr-auto">
-						<li className="nav-item">
-							<Link to={"/browse"} className="nav-link" onClick={this.notSearch}>Browse</Link>
-						</li>
-					
-					</div>
-
-				{currentUser ? (
-					<div className="navbar-nav ml-auto">
-						<li className="nav-item" style={{display: "flex",justifyContent: "center",flexDirection: "column"}}>
-							<Link to={"/profile"} onClick={this.notSearch} style={{display: "flex", color: "var(--text-1)"}}><FaUserCircle style={{height: "1.1em", width: "1.1em"}}/></Link>
-						</li>
-						<li className="nav-item">
-							<a href="/login" className="nav-link" onClick={this.logOut}>Logout</a>
-						</li>
-					</div>
-				) : (
-					<div className="navbar-nav ml-auto">
-						<li className="nav-item">
-							<Link to={"/login"} className="nav-link" onClick={this.notSearch}>Login</Link>
-						</li>
-
-						<li className="nav-item">
-							<Link to={"/register"} className="nav-link" onClick={this.notSearch}>Sign Up</Link>
-						</li>
-					</div>
-				)}
+					<MediaQuery minWidth={1224}>
+						<NavPC  currentUser={currentUser}  logOut={this.logOut} notSearch={this.notSearch} search={this.search}/>
+                    </MediaQuery>
+                    <MediaQuery maxWidth={1224}>
+                        <NavMobile2 currentUser={currentUser} open={this.state.open} toggleMenu={this.toggleMenu}  notSearch={this.notSearch} search={this.search}/>
+                    </MediaQuery>
 				</nav>
+                <MediaQuery maxWidth={1224}>
+                        <NavMobile currentUser={currentUser} open={this.state.open} logOut={this.logOut} notSearch={this.notSearch} search={this.search}/>
+                </MediaQuery>
 				<div className={this.state.search} style={{display: "flex", flexGrow: "2", justifyContent: "center"}}>
 					<Switch>
 						<Route exact path={["/", "/home"]} render={props => <Home notSearch={this.notSearch} history={props.history} location={props.location} match={props.match} />}/>

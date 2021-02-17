@@ -39,7 +39,7 @@ class SearchResult extends Component {
         
         return ( 
             <div style={{width:"100%"}}>
-                <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
+                <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.loading}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
                 <br className={this.state.loading ? 'hidden': 'xyx'}/><h1 className={this.state.loading ? 'hidden': ''} style={{textAlign: "center"}}>Search Results</h1><hr className={this.state.loading ? 'hidden': ''}/>
                 <div className="browseProds">

@@ -55,6 +55,7 @@ label {
 }
 .nav-link{
   color: var(--text-1) !important;
+  text-align: center;
 }
 .nav-link:hover{
   color: var(--accent-1) !important;
@@ -260,3 +261,52 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+
+.browseCheckboxes{
+  grid-column: 4 / span 1;
+}
+
+.browseShopLabels{
+  grid-column: 1 / span 3;
+}
+
+.form-control-search-2{
+  padding: 0px 10px 0 20px;
+  color: #333;
+  font-weight: 500;
+  border: 3px solid #555;
+  box-shadow: none;
+  height: auto;
+  border-radius: 50px !important;
+}
+
+.uwu{
+  background-color: var(--background-1);
+}
+
+.open{
+  z-index: 999;
+  top: 84.5px;
+  left: 0;
+}
+#myNavbar{
+  position: absolute;
+  width: 100%;
+  transition:left 0.1s linear;
+  background-color: var(--background-1);
+  height: calc(100vh - 84.5px);
+}
+.closed{
+  left: -100vw;
+  top: 84.5px;
+}
+.bottom{
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  margin-bottom: 10pt;
+}
+
+.hide-content{
+  overflow: hidden;
+}

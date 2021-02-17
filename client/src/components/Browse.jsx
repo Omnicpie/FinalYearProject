@@ -23,7 +23,7 @@ class Browse extends Component {
                     aldi: "1",
                     sains: "1"
                 },
-                orderby: "product_name"
+                orderby: "1"
             },
             currentPage: 1,
             productsPerPage: 100,
@@ -40,7 +40,9 @@ class Browse extends Component {
         this.btnPrevClick = this.btnPrevClick.bind(this);
         this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
         this.submitRefiner = this.submitRefiner.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
+
 
     callAPI(){
         this.setState({reloading: true});
@@ -116,6 +118,23 @@ class Browse extends Component {
         this.setPrevAndNextBtnClass(listid);
     }
 
+    handleSelect(selectedOption){
+        let x = selectedOption.value;
+        this.setState({ 
+            refine: {
+                term: this.state.refine.term,
+                shops: {
+                    asda : this.state.refine.shops.asda,
+                    coop: this.state.refine.shops.coop,
+                    tesco: this.state.refine.shops.tesco,
+                    aldi: this.state.refine.shops.aldi,
+                    sains: this.state.refine.shops.sains
+                },
+                orderby: x
+            } 
+        });
+    }
+
     submitRefiner(event){
         let form = event.target;
         this.setState({
@@ -128,9 +147,10 @@ class Browse extends Component {
                     aldi: form[2].checked ? 1 : 0,
                     sains: form[4].checked ? 1 : 0
                 },
-                orderby: "product_name"
+                orderby: this.state.refine.orderby
             },
         }, () =>{
+            console.log(this.state)
             this.callAPI();
         });
         event.preventDefault();
@@ -199,17 +219,17 @@ class Browse extends Component {
         }
         return (
             <div style={{width:"100%"}}>
-                <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.loading}/>
+                <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.loading}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
                 <div className="browseProds">
                     <MediaQuery minWidth={1224}>
-                        <BrowseRefinePC loading={this.state.loading} products={this.state.products.length} submitRefiner={this.submitRefiner}/>
+                        <BrowseRefinePC loading={this.state.loading} products={this.state.products.length} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <MediaQuery maxWidth={1224}>
-                        <BrowseRefineMobile  loading={this.state.loading} products={this.state.products.length} submitRefiner={this.submitRefiner}/>
+                        <BrowseRefineMobile  loading={this.state.loading} products={this.state.products.length} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <ul className={this.state.loading ? 'hidden': 'xyz'}>
-                        <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"#123abc"} loading={this.state.reloading}/>
+                        <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.reloading}/>
                         <div className={this.state.reloading ? 'hidden': ''}>{renderproducts}</div>
                     </ul>
                 </div>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Search from "./Search";
-import Background from "../marketbg.jpg";
 
 export default class Home extends Component {
 	constructor(props) {
