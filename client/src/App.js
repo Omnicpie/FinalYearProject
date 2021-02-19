@@ -31,11 +31,13 @@ class App extends Component {
 			  open: true
 		};
 		this.toggleMenu = this.toggleMenu.bind(this);
+		this.getLogo = this.getLogo.bind(this);
   	}
 
   	componentDidMount() {
     	const user = AuthService.getCurrentUser();
 		this.getTheme();
+		this.getLogo();
 		if(window.location.pathname === "/" || window.location.pathname === "/home"){
 			this.setState({search: "Search"})
 		}
@@ -63,6 +65,16 @@ class App extends Component {
 		}
 	}
 
+	getLogo(){
+        let x = localStorage.getItem("theme");
+		if(x === "light"){
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+		}
+		else{
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+		}
+    }
+	
 	search(){
 		this.setState({search: "Search"});
 		if(this.state.open === false){
@@ -94,10 +106,10 @@ class App extends Component {
 			<div style={{height: "100vh",display: "flex",flexDirection: "column"}} className={this.state.open ? "" : "hide-content"}>
 				<nav className="navbar navbar-expand navcolour">
 					<MediaQuery minWidth={1224}>
-						<NavPC  currentUser={currentUser}  logOut={this.logOut} notSearch={this.notSearch} search={this.search}/>
+						<NavPC  currentUser={currentUser} getLogo={this.getLogo} logOut={this.logOut} notSearch={this.notSearch} search={this.search}/>
                     </MediaQuery>
                     <MediaQuery maxWidth={1224}>
-                        <NavMobile2 currentUser={currentUser} open={this.state.open} toggleMenu={this.toggleMenu}  notSearch={this.notSearch} search={this.search}/>
+                        <NavMobile2 currentUser={currentUser} getLogo={this.getLogo} open={this.state.open} toggleMenu={this.toggleMenu}  notSearch={this.notSearch} search={this.search}/>
                     </MediaQuery>
 				</nav>
                 <MediaQuery maxWidth={1224}>
@@ -110,7 +122,7 @@ class App extends Component {
 						<Route exact path="/register" component={Register} />
 						<Route path="/search/:term" component={SearchResult} />
 						<Route exact path="/profile" component={Profile} />
-						<Route exact path="/settings" component={Settings} />
+						<Route exact path="/settings" render={props => <Settings getLogo={this.getLogo}/>}/>
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
 						<Route component={NotFound} />

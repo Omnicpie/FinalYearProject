@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 class NavMobile extends Component {
     state = { }
-
+    
     render() { 
         return (
             <div> 
