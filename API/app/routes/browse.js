@@ -10,8 +10,26 @@ module.exports = function(app) {
     });
     
     app.post("/api/browse", (req, res) => {
-        console.log(req.body);
-        let query = 'CALL browseProducts('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+        let query = "";
+        switch (req.body.orderby) {
+          case "1":
+            query = 'CALL browseProductsNameAsc('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+            break;
+          case "2": 
+            query = 'CALL browseProductsNameDesc('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+            break
+          case "3": 
+            query = 'CALL browseProductsPriceAsc('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+            break
+          case "4": 
+            query = 'CALL browseProductsPriceDesc('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+            break
+          default:
+            query = 'CALL browseProductsNameAsc('+req.body.shops.asda+','+req.body.shops.coop+','+req.body.shops.tesco+','+req.body.shops.aldi+','+req.body.shops.sains+', "%'+req.body.term+'%")';
+            break;
+        }
+
+        
         db.sequelize.query(query).then(out => res.send(out));
     });
 
