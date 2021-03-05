@@ -11,20 +11,26 @@ module.exports = function(app) {
 	});
 
 	app.post("/api/search", (req, res) => {
-		let query = 'CALL browseProducts(1,1,1,1,1,"%'+req.body.term+'%")';
+		let query = 'CALL browseProductsNameAsc(1,1,1,1,1,"%'+req.body.term+'%")';
+		let log = []
 		db.sequelize.query(query).then(out => {
-			const python = spawn('python3',["/home/pi/Documents/API/FinalYearProject/API/script.py", JSON.stringify(out.slice(0,25))]);
+			const python = spawn('python3',["/home/pi/Documents/API/FinalYearProject/API/script.py", req.body.term]);
+			python.stdin.write(JSON.stringify(out));
+			python.stdin.end();
 
 			python.stdout.on('data', function (data) {
 				console.log('Pipe data from python script ...');
 				dataToSend = data.toString();
-				console.log(dataToSend);
-				res.send(dataToSend);
+				log.push(dataToSend)
 			});
+
 			python.on('error', (err) => {console.log(err)});
+			
 			python.on('close', (code, signal) => {
-				console.log(`child process close all stdio with code ${code}`);
+				console.log(`child process close all stdio with code ${code} and signal ${signal}`);
+				res.send(log[0]);
 			});
+			
 			python.on('uncaughtException', (err, origin) => {
 				console.log(
 				  process.stderr.fd,
