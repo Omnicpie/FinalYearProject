@@ -18,7 +18,7 @@ class NavMobile extends Component {
     render() { 
         return (
             <div className="container-fluid">
-                <Link to={"/"} className="navbar-brand" onClick={this.props.search}><img src={this.props.getLogo} alt="Eshop Logo" style={{height: "40px"}}></img></Link>
+                <Link to={"/"} className="navbar-brand" onClick={this.props.search}><img alt="Eshop Logo" style={{height: "40px"}}></img></Link>
                 <div className="navbar-nav ml-auto">
                     <button style={{margin: "10pt"}} className="button" onClick={this.props.toggleMenu}>{this.props.open ? (<FaBars/>) : (<FaTimes/>)}</button>
                 </div>

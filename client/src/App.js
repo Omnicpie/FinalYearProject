@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AuthService from "./services/auth.service";
@@ -17,6 +17,9 @@ import Settings from "./components/Settings";
 import NavPC from "./components/NavPC";
 import NavMobile from "./components/NavMobile";
 import NavMobile2 from "./components/NavMobile2";
+import About from "./components/About";
+import BasketConfig from "./components/BasketConfig";
+import Cookies from "./components/Cookies";
 
 class App extends Component {
   	constructor(props) {
@@ -28,16 +31,19 @@ class App extends Component {
     	this.state = {
 			  currentUser: undefined,
 			  search: "",
-			  open: true
+			  open: true,
+			  cookies: "false"
 		};
 		this.toggleMenu = this.toggleMenu.bind(this);
 		this.getLogo = this.getLogo.bind(this);
+		this.hideCookies = this.hideCookies.bind(this);
   	}
 
   	componentDidMount() {
     	const user = AuthService.getCurrentUser();
 		this.getTheme();
 		this.getLogo();
+		this.getCookies();
 		if(window.location.pathname === "/" || window.location.pathname === "/home"){
 			this.setState({search: "Search"})
 		}
@@ -62,6 +68,19 @@ class App extends Component {
 		}
 		else{
 			document.documentElement.setAttribute('data-theme', x);
+		}
+	}
+	hideCookies(){
+		this.setState({cookies: "true"});
+		localStorage.setItem("cookies", "true")
+	}
+	getCookies(){
+		let x = localStorage.getItem("cookies");
+		if(x === null){
+			this.setState({cookies: "false"})
+		}
+		else{
+			this.setState({cookies: x})
 		}
 	}
 
@@ -125,9 +144,22 @@ class App extends Component {
 						<Route exact path="/settings" render={props => <Settings getLogo={this.getLogo}/>}/>
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
+						<Route path="/about" component={About} />
+						<Route path="/basket" component={BasketConfig} />
+						<Route path="/cookies" component={Cookies} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
+				{(this.state.cookies === "true")? null : 
+					<div style={{position: "fixed", height: "60pt", width: "100%", bottom: "0", zIndex: "9", backgroundColor: "var(--background-2)", display:"flex"}}>
+						<div style={{display: "flex", justifyContent: "center", flexDirection:"column"}}>
+							<p style={{height:"min-content", marginBottom: "0", marginLeft:"10pt", fontSize: "10pt"}}>By using Best Basket, you accept the use of cookies on this browser.</p>
+							<p style={{height:"min-content", marginBottom: "0", marginLeft:"10pt", fontSize: "10pt"}}>You can read more in our <Link to={"/cookies"} className="nav-link" onClick={this.notSearch} style={{display: "inline", padding: "0", textDecoration: "underline"}}>Cookie Policy</Link>.</p>
+						</div>
+						<div style={{marginLeft: "auto", display: "flex", justifyContent: "center", flexDirection:"column"}}>
+							<button className="button b-alt" onClick={this.hideCookies} style={{height:"min-content", marginRight: "10pt"}}>Close</button>
+						</div>
+					</div>}
 			</div>
 		);
 	}

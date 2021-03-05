@@ -1,7 +1,7 @@
 [data-theme="light"]{
   --background-1: #f0f2f5;
   --background-2: #D7D7D7;
-  --background-3: #65676B;
+  --background-3: #b7b7b7;
   --accent-1: rgb(131, 17, 131);
   --accent-1-025: rgba(131, 17, 131,0.25);
   --accent-2: rgb(179, 152, 5);
@@ -11,7 +11,7 @@
 [data-theme="dark"]{
   --background-1: #18191A;
   --background-2: #242526;
-  --background-3: #65676B;
+  --background-3: #0F1317;
   --accent-1: rgb(131, 17, 131);
   
   --accent-1-025: rgba(131, 17, 131,0.25);
@@ -62,7 +62,7 @@ label {
 }
 
 .card {
-  background-color: #f7f7f7;
+  background-color: var(--background-2);
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 50px;
@@ -309,4 +309,26 @@ input:checked + .slider:before {
 
 .hide-content{
   overflow: hidden;
+}
+
+.b-alt{
+  background-color: var(--background-1);
+  border-color: var(--background-1);
+}
+
+.b-alt:hover{
+  background-color: var(--background-3);
+  border-color: var(--background-3);
+}
+
+.profile:hover{
+  color: var(--accent-1);
+}
+.shopList{
+  margin-bottom: 10pt;
+}
+.button:disabled{
+  background-color: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--text-1) !important;
 }

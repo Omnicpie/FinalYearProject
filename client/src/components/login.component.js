@@ -120,10 +120,7 @@ export default class Login extends Component {
             </div>
 
             <div className="form-group">
-              <button
-                className="btn btn-primary btn-block"
-                disabled={this.state.loading}
-              >
+              <button className="button b-alt" style={{width:"100%"}} disabled={this.state.loading}>
                 {this.state.loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
