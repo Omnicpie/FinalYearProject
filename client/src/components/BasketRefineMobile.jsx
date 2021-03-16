@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
+import AuthService from "../services/auth.service";
+import { FaExclamationCircle } from "react-icons/fa";
 
 class BasketRefineMobile extends Component {
     state = { 
-        open: false
+        open: false,
+        currentUser: undefined
         
+    }
+
+    componentDidMount(){
+    	const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+              currentUser: user
+            });
+      }
     }
 
     toggleMenu(){
@@ -20,38 +31,38 @@ class BasketRefineMobile extends Component {
 
     }
     render() {
-        const options = [
-            {value: '1', label: 'Product Names A-Z'},
-            {value: '2', label: 'Product Names Z-A'},
-            {value: '3', label: 'Product Price LOW-HIGH'},
-            {value: '4', label: 'Product Price HIGH-LOW'},
-        ];
-        const styles = {
-            select: base => ({
-                ...base,
-                border: `0px`
-            }),
-            option: (provided, state) => {
-                const background = "var(--background-1)"; 
-                return {...provided, background};
-            }
-        };
+        const {currentUser} = this.state;
         return ( 
-            <div className={this.props.loading ? 'hidden': ''}>
+            <div className={this.props.loading ? 'hidden': ''} style={{zIndex: "80", position: "relative",backgroundColor: "var(--background-1)"}}>
                 <button style={{margin: "10pt"}} className="button" onClick={this.toggleMenu.bind(this)}>Refine Browse</button>
-                <form className={this.state.open ? 'form-visable-mob': 'hidden'} onSubmit={this.props.submitRefiner} style={{width: "95%", margin: "auto", border: "1px solid black", marginBottom: "10pt", backgroundColor: "var(--background-2)"}}>
-                    <p style={{padding: "5pt"}}>{this.props.products} products found</p>
+                <form className={this.state.open ? 'form-visable-mob': 'hidden'} onSubmit={this.props.submitRefiner} style={{width: "80%", margin: "auto", marginBottom: "15pt"}}>
+                    <p style={{marginTop: "10pt"}}>{this.props.products} item{(this.props.products === "1") ? null : "s"}</p>
                     <hr/>
-                    <input type="text" name="term" className="form-control form-control-search-2" style={{width: "80%", margin: "auto"}}></input>
-                    <div className="shops"  style={{display: "grid", width: "70%", margin: "auto"}}>
+                    {(currentUser) ?
+                     <button onClick={this.props.handleShow} type="button" className="button">Save Basket</button> : 
+                            <button type="button" disabled className="button">Save Basket<span className="tooltiptext tooltiptext-mob">Log in to save a basket</span></button>
+                    }
+                    <hr/>
+                    <h4 style={{textAlign: "center"}}>Basket Options</h4>
+                    <hr/>
+                    <p style={{marginBottom: "0", textDecoration: "underline"}}>Shop Availablity</p>
+                    <div className="shops" style={{display: "grid"}}>
                         <label htmlFor="asda" className="browseShopLabels" style={{gridRow: "1"}}>Asda</label><input type="checkbox" name="asda" className="browseCheckboxes" style={{gridRow: "1"}}></input>
                         <label htmlFor="aldi" className="browseShopLabels" style={{gridRow: "2"}}>Aldi</label><input type="checkbox" name="aldi" className="browseCheckboxes" style={{gridRow: "2"}}></input>
                         <label htmlFor="tesco" className="browseShopLabels" style={{gridRow: "3"}}>Tesco</label><input type="checkbox" name="tesco" className="browseCheckboxes" style={{gridRow: "3"}}></input>
                         <label htmlFor="sains" className="browseShopLabels" style={{gridRow: "4"}}>Sainsburys</label><input type="checkbox" name="sains" className="browseCheckboxes" style={{gridRow: "4"}}></input>
                         <label htmlFor="coop" className="browseShopLabels" style={{gridRow: "5"}}>CoOp</label><input type="checkbox" name="coop" className="browseCheckboxes" style={{gridRow: "5"}}></input>
                     </div>
-                    <Select defaultValue={options[0]} label="Single select" options={options} style={styles} onChange={this.props.handleSelect} theme={theme => ({...theme, borderRadius: "10px", colors: {...theme.colors, primary: "var(--accent-1)", primary25: "var(--background-1)", primary50: "var(--text-1)", primary75: "var(--text-1)", neutral0: "var(--background-2)", neutral80: "var(--text-1)"}})}/>
-                    <input type="submit"  className="button" value="Update Browse" style={{width: "80%", margin: "auto", marginBottom: "10pt", backgroundColor: "var(--background-1)"}}></input>
+                    <hr/>
+                    <div className="shops" style={{display: "grid"}}>
+                        <label htmlFor="deliver" className="browseShopLabels" style={{gridRow: "1"}}>Delivery</label><input type="checkbox" name="delivery" className="browseCheckboxes" style={{gridRow: "1"}}></input>
+                    </div>
+                    {(currentUser) ? 
+                    <div>
+                        <p style={{fontSize: "9pt"}}><FaExclamationCircle  style={{height: "1em", width: "1em"}}/>These preferences can be saved in your profile settings</p>
+                    </div> : null}
+                    <hr/>
+                    <input type="submit" value="Find Best Basket!" className="button"></input>
                 </form>
             </div>
         );

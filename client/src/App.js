@@ -20,6 +20,7 @@ import NavMobile2 from "./components/NavMobile2";
 import About from "./components/About";
 import BasketConfig from "./components/BasketConfig";
 import Cookies from "./components/Cookies";
+import BasketLoad from "./components/BasketLoad";
 
 class App extends Component {
   	constructor(props) {
@@ -145,6 +146,7 @@ class App extends Component {
 						<Route path="/user" component={BoardUser} />
 						<Route path="/browse" component={Browse} />
 						<Route path="/about" component={About} />
+						<Route path="/basket/:id" component={BasketLoad} />
 						<Route path="/basket" component={BasketConfig} />
 						<Route path="/cookies" component={Cookies} />
 						<Route component={NotFound} />

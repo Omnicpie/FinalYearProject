@@ -17,6 +17,7 @@ class BasketConfig extends Component {
             reloading: false,
             show: false,
             price: 0,
+            basketID: {id: 0},
 			currentUser: { username: "" },
             products: [
                 {term: "",found: false, item: {url: "", shop: "", product_name: "", product_price: "", product_additionals: ""}}
@@ -56,18 +57,32 @@ class BasketConfig extends Component {
     callSaveAPI(){
         fetch("https://eshopapi.ddns.net/api/basket/save", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.save)})
         .then(res=> console.log(res))
-        .then(res=> this.callAPI());
+        .then(res=> this.updateBaskets());
+    }
+
+    updateBaskets(){
+        fetch("https://eshopapi.ddns.net/api/basket/get/all", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.currentUser)})
+        .then(res=> res.json())
+        .then(res => this.setState({userBaskets: res }))
     }
 
     callAPI(){
-        if(this.state.currentUser){
-            fetch("https://eshopapi.ddns.net/api/basket/get/all", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.currentUser)})
-            .then(res=> res.json())
-            .then(res => this.setState({ loading:false,reloading:false, userBaskets: res }));
-        }
-        else{
-            this.setState({ loading:false,reloading:false });
-        }
+        fetch("https://eshopapi.ddns.net/api/basket/get/all", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.currentUser)})
+        .then(res=> res.json())
+        .then(res => {
+            let price = 0;
+            for(let i = 0; i<res.length; i++){
+                if(res[i].value == this.state.basketID.id){
+                    price = res[i].price;
+                }
+            }
+            this.setState({userBaskets: res , price: price})
+        })
+        .then(res => {
+            fetch("https://eshopapi.ddns.net/api/basket/get", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.basketID)})
+            .then(res => res.json())
+            .then(res => this.setState({products: res, loading: false, reloading: false}));
+        });
     }
 
     callFindAPI(){
@@ -90,7 +105,7 @@ class BasketConfig extends Component {
             save: {
                 products: this.state.products,
                 type: this.state.type,
-                name: this.state.name,
+                name: selectedOption.label,
                 overwrite: x,
                 price: this.state.save.price
             },
@@ -115,7 +130,6 @@ class BasketConfig extends Component {
                 },
                 delivery: form[6].checked ? 1 : 0
             },
-            reloading: true
         }, () =>{
             console.log(this.state)
             this.callFindAPI();
@@ -145,7 +159,8 @@ class BasketConfig extends Component {
             name = form[1].value
         }
         else if(form[2].checked){
-            type = "overwrite"
+            type = "overwrite";
+            name = this.state.save.name;
         }
         let x = [];
         let prods = this.state.products
@@ -166,18 +181,19 @@ class BasketConfig extends Component {
             console.log(this.state)
             this.callSaveAPI();
             this.handleClose();
-            //this.callAPI();
         });
         event.preventDefault();
     }
 
     componentDidMount(){
 		const currentUser = AuthService.getCurrentUser();
-        this.setState({currentUser: currentUser}, ()=>{
+        let savepre = this.state.save;
+        savepre.overwrite = this.props.match.params.id
+        this.setState({currentUser: currentUser, basketID: {id: this.props.match.params.id}, save: savepre}, ()=>{
             this.callAPI();
         });
     }
-    
+
     handleClose(){
         this.setState({show: false});
     }
@@ -200,14 +216,14 @@ class BasketConfig extends Component {
             <div style={{width:"100%"}}>
                 <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.loading}/>
                 
-                <Modal handleClose={this.handleClose} show={show} saveBasket={this.saveBasket} handleSelect={this.handleSelect} userBaskets={userBaskets}/>
+                <Modal handleClose={this.handleClose} overwrite={this.props.match.params.id} show={show} saveBasket={this.saveBasket} handleSelect={this.handleSelect} userBaskets={userBaskets}/>
                 <p className={this.state.loading ? '': 'hidden'} style={{textAlign: 'center'}}><br/>Loading</p>
                 <div className="browseProds">
                     <MediaQuery minWidth={1224}>
                         <BasketRefinePC loading={this.state.loading} handleShow={this.handleShow} products={this.state.products.length} saveBasket={this.saveBasket} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <MediaQuery maxWidth={1224}>
-                        <BasketRefineMobile loading={this.state.loading} handleShow={this.handleShow} products={this.state.products.length} saveBasket={this.saveBasket} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
+                        <BasketRefineMobile  loading={this.state.loading} products={this.state.products.length} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <ul className={this.state.loading ? 'hidden': 'xyz'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.reloading}/>

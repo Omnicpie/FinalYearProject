@@ -23,8 +23,8 @@ class BasketRefinePC extends Component {
                     <p style={{marginTop: "10pt"}}>{this.props.products} item{(this.props.products === "1") ? null : "s"}</p>
                     <hr/>
                     {(currentUser) ?
-                     <button onClick={this.props.savePref}  className="button">Save Basket</button> : 
-                        <button onClick={this.props.savePref} disabled className="button">Save Basket</button>
+                     <button onClick={this.props.handleShow} type="button" className="button">Save Basket</button> : 
+                            <button type="button" disabled className="button">Save Basket<span className="tooltiptext">Log in to save a basket</span></button>
                     }
                     <hr/>
                     <h4 style={{textAlign: "center"}}>Basket Options</h4>

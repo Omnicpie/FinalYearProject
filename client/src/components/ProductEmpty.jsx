@@ -27,6 +27,16 @@ class ProductEmpty extends Component {
         return this.state.shops[shop]
     }
 
+    shopIconStyle(){
+        var shop = this.props.product.item.shop;
+        if(shop === ""){
+            return {height: "45px"}
+        }
+        else{
+            return {height: "15px"}
+        }
+    }
+
     handleChange(event){
         console.log(event)
         this.props.product.term = event.target.value
@@ -60,12 +70,22 @@ class ProductEmpty extends Component {
         this.props.removeSelf(x);
     }
     componentDidMount(){
-        document.getElementById(this.props.prodKey).value = this.props.product.term;
+        try{
+            document.getElementById(this.props.prodKey).value = this.props.product.term;
+        }
+        catch(e){
+
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
         if(this.props.product.term !== prevProps.product.term){
-            document.getElementById(this.props.prodKey).value = this.props.product.term;
+            try{
+                document.getElementById(this.props.prodKey).value = this.props.product.term;
+            }
+            catch(e){
+
+            }
         }
     }
 
@@ -76,14 +96,14 @@ class ProductEmpty extends Component {
                 {this.findRibbon()}
                 {(this.state.visable) ? <div style={{zIndex: 9999, position: "absolute", color: "var(--accent-1)", cursor: "pointer"}} onClick={this.removeSelf}><FaTimesCircle style={{height: "1.1em", width: "1.1em"}}/></div> : null}
                 <div className="typeSec">
-                    <img src={this.getShop()} alt="Logo" className="ShopIcon" style={{height: "45px"}}/>
+                    <img src={this.getShop()} alt="Logo" className="ShopIcon" style={this.shopIconStyle()}/>
                 </div>
                 <div style={{ borderLeft: '1px solid #dbdbdb', marginRight: '20px' }}></div>
                 <div className="InfoSec">
                     {(this.props.product.found) ?
 			        <div>
-                        <p>{this.props.product.product_name}</p>
-                        <p style={{fontSize: "0.8em"}}>Price: {this.props.product.product_price}</p>
+                        <p>{this.props.product.item.product_name}</p>
+                        <p style={{fontSize: "0.8em"}}>Price: {this.props.product.item.product_price}</p>
                     </div>
                     :  
                     <div>
