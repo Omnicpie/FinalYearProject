@@ -8,6 +8,7 @@ import BasketRefinePC from "./BasketRefinePC";
 import BasketRefineMobile from "./BasketRefineMobile";
 import Modal from "./Modal";
 import AuthService from "../services/auth.service";
+import { FaExclamationCircle } from 'react-icons/fa';
 
 class BasketConfig extends Component {
     constructor() {
@@ -16,6 +17,7 @@ class BasketConfig extends Component {
             loading: true,
             reloading: false,
             show: false,
+            showConfirm: false,
             price: 0,
 			currentUser: { username: "" },
             products: [
@@ -55,7 +57,11 @@ class BasketConfig extends Component {
 
     callSaveAPI(){
         fetch("https://eshopapi.ddns.net/api/basket/save", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.save)})
-        .then(res=> console.log(res))
+        .then(res=> {
+            this.setState({showConfirm: true}, ()=>{
+                setTimeout(() => {this.setState({showConfirm: false});console.log("hi")}, 5000)
+            })
+        })
         .then(res=> this.callAPI());
     }
 
@@ -211,15 +217,17 @@ class BasketConfig extends Component {
                     </MediaQuery>
                     <ul className={this.state.loading ? 'hidden': 'xyz'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.reloading}/>
-                        <div className={this.state.reloading ? 'hidden': ''}>
+                        <div className={this.state.reloading ? 'hidden': 'disp-ro'}>
                             {renderproducts}
                             <ProductAdd handleClick={this.handleClick}/>
                         </div>
                     </ul>
                 </div>
                 <div className={this.state.reloading ? 'hidden': 'price-section'}>
-                    Total Price: £{this.state.price}
+                    <p style={{width: "max-content", height: "max-content", margin: "auto 0"}}>Total Price: £{this.state.price}</p>
+                    <input type="submit" value="Find Best Basket!" className="button" form="x1" style={{width: "max-content", margin: "auto 10pt auto auto", height: "max-content"}}></input>
                 </div>
+                <div className={this.state.showConfirm ? 'confirmation alert alert-success': 'hidden'}><FaExclamationCircle/>Basket Saved</div>
             </div>
         );
     }

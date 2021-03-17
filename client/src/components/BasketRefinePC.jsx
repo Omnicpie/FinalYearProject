@@ -19,7 +19,7 @@ class BasketRefinePC extends Component {
         const {currentUser} = this.state;
         return ( 
             <div style={{width: "15%", display: "flex", float: "left", flexGrow: "2", flexDirection: "column"}}>
-                <form className={this.props.loading ? 'hidden': 'form-visable'} onSubmit={this.props.submitRefiner}>
+                <form className={this.props.loading ? 'hidden': 'form-visable'} id="x1" onSubmit={this.props.submitRefiner}>
                     <p style={{marginTop: "10pt"}}>{this.props.products} item{(this.props.products === "1") ? null : "s"}</p>
                     <hr/>
                     {(currentUser) ?
@@ -46,7 +46,6 @@ class BasketRefinePC extends Component {
                         <p style={{fontSize: "9pt"}}><FaExclamationCircle  style={{height: "1em", width: "1em"}}/>These preferences can be saved in your profile settings</p>
                     </div> : null}
                     <hr/>
-                    <input type="submit" value="Find Best Basket!" className="button"></input>
                 </form>
             </div>
         );

@@ -121,7 +121,6 @@ class App extends Component {
 
   	render() {
 		const { currentUser } = this.state;
-
 		return (
 			<div style={{height: "100vh",display: "flex",flexDirection: "column"}} className={this.state.open ? "" : "hide-content"}>
 				<nav className="navbar navbar-expand navcolour">

@@ -35,7 +35,7 @@ class BasketRefineMobile extends Component {
         return ( 
             <div className={this.props.loading ? 'hidden': ''} style={{zIndex: "80", position: "relative",backgroundColor: "var(--background-1)"}}>
                 <button style={{margin: "10pt"}} className="button" onClick={this.toggleMenu.bind(this)}>Refine Browse</button>
-                <form className={this.state.open ? 'form-visable-mob': 'hidden'} onSubmit={this.props.submitRefiner} style={{width: "80%", margin: "auto", marginBottom: "15pt"}}>
+                <form className={this.state.open ? 'form-visable-mob': 'hidden'} id="x1" onSubmit={this.props.submitRefiner} style={{width: "80%", margin: "auto", marginBottom: "15pt"}}>
                     <p style={{marginTop: "10pt"}}>{this.props.products} item{(this.props.products === "1") ? null : "s"}</p>
                     <hr/>
                     {(currentUser) ?
@@ -62,7 +62,6 @@ class BasketRefineMobile extends Component {
                         <p style={{fontSize: "9pt"}}><FaExclamationCircle  style={{height: "1em", width: "1em"}}/>These preferences can be saved in your profile settings</p>
                     </div> : null}
                     <hr/>
-                    <input type="submit" value="Find Best Basket!" className="button"></input>
                 </form>
             </div>
         );

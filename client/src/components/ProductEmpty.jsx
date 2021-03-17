@@ -107,7 +107,7 @@ class ProductEmpty extends Component {
                     </div>
                     :  
                     <div>
-                        <p>Input Product</p>
+                        <p>Input Product</p>{(this.props.product.item.product_name !== "") ? <p style={{color: "red"}}>Product Not Found, try a new term</p> : null}
                         <input id={this.props.prodKey} onChange={this.handleChange}/>
                     </div>}
                 </div>

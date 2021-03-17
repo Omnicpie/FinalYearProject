@@ -15,11 +15,20 @@ export default class Profile extends Component {
 			loading: true,
 			reloading: false
 		};
+		this.deleteBasket = this.deleteBasket.bind(this);
 	}
 	getBaskets(){
 			fetch("https://eshopapi.ddns.net/api/basket/get/all", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.currentUser)})
 			.then(res=> res.json())
 			.then(res => this.setState({ loading:false,reloading:false, savedBaskets: res }));
+	}
+
+	deleteBasket(event){
+		console.log(event.target.id)
+		fetch("https://eshopapi.ddns.net/api/basket/delete", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify({basket: event.target.id})})
+			.then(res=> this.setState({loading: true}, () => {
+				this.getBaskets()
+			}));
 	}
 
 	componentDidMount() {
@@ -38,7 +47,7 @@ export default class Profile extends Component {
 
 		const { currentUser, savedBaskets } = this.state;
 		const renderSaved = savedBaskets.map((basket) => {
-			return <Basket key={basket.value} basket={basket} />
+			return <Basket key={basket.value} basket={basket} deleteBasket={this.deleteBasket}/>
 		});
 
 		return (

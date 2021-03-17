@@ -41,7 +41,6 @@ class Product extends Component {
                 </div>
                 <div style={{ borderLeft: '1px solid #dbdbdb', marginRight: '20px' }}></div>
                 <div className="InfoSec">
-                    
                     <p>{this.props.product.product_name}</p>
                     <p style={{fontSize: "0.8em"}}>Price: {this.props.product.product_price}</p>
                 </div>
