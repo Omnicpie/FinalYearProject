@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import {Link} from "react-router-dom";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
@@ -169,7 +170,7 @@ export default class Register extends Component {
                     validations={[required, vpassword]}
                   />
                 </div>
-
+                <div style={{fontSize: "7pt"}}>By Signing up you agree to our <Link to="/cookies">cookie policy</Link>, and to storing the details given above in accordence with <a href="https://www.legislation.gov.uk/ukpga/2018/12/contents/enacted">DPA 2018</a>.</div>
                 <div className="form-group">
                   <button className="button b-alt" style={{width:"100%"}}>Sign Up</button>
                 </div>
