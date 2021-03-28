@@ -24,7 +24,6 @@ export default class Profile extends Component {
 	}
 
 	deleteBasket(event){
-		console.log(event.target.id)
 		fetch("https://eshopapi.ddns.net/api/basket/delete", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify({basket: event.target.id})})
 			.then(res=> this.setState({loading: true}, () => {
 				this.getBaskets()

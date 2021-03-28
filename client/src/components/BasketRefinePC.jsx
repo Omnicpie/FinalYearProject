@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from "../services/auth.service";
-import { FaExclamationCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
 
 class BasketRefinePC extends Component {
     state = { 
@@ -39,7 +40,7 @@ class BasketRefinePC extends Component {
                     </div>
                     <hr/>
                     <div className="shops" style={{display: "grid"}}>
-                        <label htmlFor="deliver" className="browseShopLabels" style={{gridRow: "1"}}>Delivery</label><input type="checkbox" name="delivery" className="browseCheckboxes" style={{gridRow: "1"}}></input>
+                        <Link to="/about" style={{gridRow: "1", display: "flex", flexDirection: "column", justifyContent: "center"}}><FaInfoCircle style={{height: "1em", width: "1em"}}/></Link><label htmlFor="deliver" className="browseShopLabels" style={{gridRow: "1"}}>Delivery</label><input type="checkbox" name="delivery" className="browseCheckboxes" style={{gridRow: "1"}}></input>
                     </div>
                     {(currentUser) ? 
                     <div>

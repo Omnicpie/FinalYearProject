@@ -7,18 +7,28 @@ class NavMobile extends Component {
 
     componentDidMount(){
         let x = localStorage.getItem("theme");
-		if(x === "light"){
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+		if(x === "dark"){
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogodark.png"
 		}
 		else{
 			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
 		}
     }
 
+    getIcon(){
+        let x = localStorage.getItem("theme");
+		if(x === "dark"){
+			return "eshoplogodark.png"
+		}
+		else{
+			return "eshoplogolight.png"
+		}
+    }
+
     render() { 
         return (
             <div className="container-fluid">
-                <Link to={"/"} className="navbar-brand" onClick={this.props.search}><img alt="Eshop Logo" style={{height: "40px"}}></img></Link>
+                <Link to={"/"} className="navbar-brand" onClick={this.props.search}><img alt="Eshop Logo" src={this.getIcon()} style={{height: "40px"}}></img></Link>
                 <div className="navbar-nav ml-auto">
                     <button style={{margin: "10pt"}} className="button" onClick={this.props.toggleMenu}>{this.props.open ? (<FaBars/>) : (<FaTimes/>)}</button>
                 </div>

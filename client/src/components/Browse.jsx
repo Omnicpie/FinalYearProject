@@ -150,7 +150,6 @@ class Browse extends Component {
                 orderby: this.state.refine.orderby
             },
         }, () =>{
-            console.log(this.state)
             this.callAPI();
         });
         event.preventDefault();

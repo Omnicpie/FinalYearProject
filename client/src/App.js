@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AuthService from "./services/auth.service";
@@ -21,6 +21,8 @@ import About from "./components/About";
 import BasketConfig from "./components/BasketConfig";
 import Cookies from "./components/Cookies";
 import BasketLoad from "./components/BasketLoad";
+import ToPrev from "./components/ToPrev";
+const queryString = require('query-string')
 
 class App extends Component {
   	constructor(props) {
@@ -45,6 +47,7 @@ class App extends Component {
 		this.getTheme();
 		this.getLogo();
 		this.getCookies();
+
 		if(window.location.pathname === "/" || window.location.pathname === "/home"){
 			this.setState({search: "Search"})
 		}
@@ -87,8 +90,8 @@ class App extends Component {
 
 	getLogo(){
         let x = localStorage.getItem("theme");
-		if(x === "light"){
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+		if(x === "dark"){
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogodark.png"
 		}
 		else{
 			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"

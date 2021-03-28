@@ -11,7 +11,6 @@ class Modal extends Component {
         const showClass = (this.props.show) ? "modal showModal" : "modal hideModal";
         let x = this.props.overwrite;
         const found = this.props.userBaskets.find(element => element.value == x);
-        console.log(found)
 
         const styles = {
             select: base => ({

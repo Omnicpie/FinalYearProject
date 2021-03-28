@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CornerRibbon from "react-corner-ribbon";
 
 class ProductAdd extends Component {
     state = {

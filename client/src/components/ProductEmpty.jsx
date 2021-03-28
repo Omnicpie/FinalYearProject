@@ -14,7 +14,8 @@ class ProductEmpty extends Component {
                 "coop": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/The_Co-Operative_clover_leaf_logo.svg/500px-The_Co-Operative_clover_leaf_logo.svg.png",
                 "" : "EshopLogo1.png"
             },
-             visable: false
+             visable: false,
+             warn: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.showDelete = this.showDelete.bind(this);
@@ -38,9 +39,14 @@ class ProductEmpty extends Component {
     }
 
     handleChange(event){
-        console.log(event)
-        this.props.product.term = event.target.value
-        event.target.value = this.props.product.term 
+        if(event.target.value.length === 1){
+            this.setState({warn: true})
+        }
+        else{
+            this.setState({warn: false})
+            this.props.product.term = event.target.value
+            event.target.value = this.props.product.term 
+        }
     }
 
     findRibbon(){
@@ -108,6 +114,7 @@ class ProductEmpty extends Component {
                     :  
                     <div>
                         <p>Input Product</p>{(this.props.product.item.product_name !== "") ? <p style={{color: "red"}}>Product Not Found, try a new term</p> : null}
+                        {(this.state.warn) ? <p style={{color: "red"}}>Product Names must be 2 or more letters in length!</p> : null}
                         <input id={this.props.prodKey} onChange={this.handleChange}/>
                     </div>}
                 </div>

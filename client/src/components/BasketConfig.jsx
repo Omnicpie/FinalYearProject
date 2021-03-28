@@ -59,7 +59,7 @@ class BasketConfig extends Component {
         fetch("https://eshopapi.ddns.net/api/basket/save", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.save)})
         .then(res=> {
             this.setState({showConfirm: true}, ()=>{
-                setTimeout(() => {this.setState({showConfirm: false});console.log("hi")}, 5000)
+                setTimeout(() => {this.setState({showConfirm: false})}, 5000)
             })
         })
         .then(res=> this.callAPI());
@@ -123,17 +123,13 @@ class BasketConfig extends Component {
             },
             reloading: true
         }, () =>{
-            console.log(this.state)
             this.callFindAPI();
         });
         event.preventDefault();
     }
     
     removeSelf(item){
-        
-        console.log(item)
         const prods = this.state.products;
-        console.log(item)
         if (item > -1) {
             prods.splice(item, 1);
         }
@@ -143,7 +139,6 @@ class BasketConfig extends Component {
 
     saveBasket(event){
         let form = event.target;
-        console.log(form)
         let type = ""
         let name = ""
         if(form[0].checked){
@@ -169,7 +164,6 @@ class BasketConfig extends Component {
                 price: this.state.price
             },
         }, () =>{
-            console.log(this.state)
             this.callSaveAPI();
             this.handleClose();
             //this.callAPI();
