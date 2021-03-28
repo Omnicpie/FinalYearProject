@@ -12,7 +12,7 @@ def checkAdditionals(products):
                     try: 
                         xy = float(price) / float(weightsOrVolumesResult)
                     except:
-                        ddddddd = "sasdasdada"
+                        continue
                     priceNoSigns  = re.search("[0-9.]+",price).group()
                     xy = float(priceNoSigns) / float(num)
                     if(re.search("[a-zA-z]+", weightsOrVolumesResult).group() == ""):
@@ -24,12 +24,13 @@ def checkAdditionals(products):
                 else:
                     amounts = re.search("[0-9]+", item["product_name"])
 
-            except Exception as e:
-                asodcamsd = e
+            except:
+                continue
     return products
 
+
 def getTextSimilarity(term, prod_name):
-    similarity = textdistance.levenshtein.normalized_similarity(term, prod_name)
+    similarity = textdistance.ratcliff_obershelp.normalized_similarity(term, prod_name)
     return similarity
 
 
@@ -40,8 +41,14 @@ def groupTypes(products, term):
     try:
         for item in products:
             try:
-                info = str(re.search("/[0-9A-Za-z ]+", item["product_additionals"]).group())
-                priceNoSigns  = float(re.search("[0-9.]+",item["product_additionals"]).group())
+                try:
+                    info = str(re.search("/[0-9A-Za-z ]+", item["product_additionals"]).group())
+                except:
+                    info = str(re.search("per [0-9A-Za-z ]+", item["product_additionals"]).group())
+                try:
+                    priceNoSigns  = float(re.search("[0-9.]+",item["product_additionals"]).group())
+                except:
+                    priceNoSigns  = float(re.search("[0-9.]+",item["product_price"]).group())
 
                 infosigns = str(re.search("[A-Za-z ]+", info).group())
                 quantity = re.search("[0-9]+", info)
@@ -69,31 +76,24 @@ def groupTypes(products, term):
                     value = priceNoSigns / textLikeness
                     combine = item, value, textLikeness
                     lSet.append(combine)
-            except:
-                nothing = "skipping"
+            except Exception as e:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1] 
+                continue
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1] 
     return eachSet, kgSet, lSet
-        
+
 def sortElem(elem):
     return elem[1]
 
 def main():
     lines = sys.stdin.readlines()
     products = json.loads(lines[0])
-    f = open("text2.txt", "w")
-    f.write(str(products))
-    f.close()
     term = sys.argv[1]
     productsChecked = checkAdditionals(products)
-    f = open("text3.txt", "w")
-    f.write(str(products))
-    f.close()
     groupedSets = groupTypes(productsChecked, term)
-    f = open("text4.txt", "w")
-    f.write(str(groupedSets))
-    f.close()
     groupedSets[0].sort(key=sortElem)
     groupedSets[1].sort(key=sortElem)
     groupedSets[2].sort(key=sortElem)
@@ -112,13 +112,32 @@ def main():
         end = len(finalOrder)-1
     else:
         end = 30
-
-    f = open("text.txt", "w")
-    f.write(str(groupedSets).replace("]", "\n\n"))
-    f.close()
     print(json.dumps(finalOrder[0:end]))
+    return json.dumps(finalOrder[0:end])
 
 
+def searchFromBrowse(products, term):
+    term = sys.argv[1]
+    productsChecked = checkAdditionals(products)
+    groupedSets = groupTypes(productsChecked, term)
+    groupedSets[0].sort(key=sortElem)
+    groupedSets[1].sort(key=sortElem)
+    groupedSets[2].sort(key=sortElem)
+    lens = []
+    lens.append((0, len(groupedSets[0])))
+    lens.append((1, len(groupedSets[1])))
+    lens.append((2, len(groupedSets[2])))
+    lens.sort(key=sortElem)
+    finalOrder = []
+    for x  in lens:
+        array = x[0]
+        for i in groupedSets[array]:
+            finalOrder.append(i[0])
+    if len(finalOrder) < 30: 
+        end = len(finalOrder)-1
+    else:
+        end = 30
+    return finalOrder
 
-
-main()
+if(sys.argv[0] == "/home/pi/Documents/API/FinalYearProject/API/script.py"):
+    main()

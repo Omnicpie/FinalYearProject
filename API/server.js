@@ -44,6 +44,7 @@ require('./app/routes/user')(app);
 require('./app/routes/browse')(app);
 require('./app/routes/search')(app);
 require('./app/routes/shops')(app);
+require('./app/routes/basket')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
