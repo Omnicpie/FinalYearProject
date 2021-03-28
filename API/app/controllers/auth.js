@@ -14,7 +14,7 @@ exports.signup = (req, res) => {
         p_hash: bcrypt.hashSync(req.body.password, 10)
     })
     .then(user => {
-        res.send({ msg: "User reg!" })
+        res.send({ msg: "User registered! You can now log in" })
     })
     .catch(err => {
         res.status(500).send({ msg: err.message });
