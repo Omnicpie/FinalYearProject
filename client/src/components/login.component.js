@@ -131,11 +131,11 @@ export default class Login extends Component {
             {this.state.message && (
               <div className="form-group">
                 <div className="alert alert-danger" role="alert">
-                  {this.state.message}
+                  Invalid user or password
                 </div>
               </div>
             )}
-            <CheckButton
+            <CheckButton  
               style={{ display: "none" }}
               ref={c => {
                 this.checkBtn = c;
