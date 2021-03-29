@@ -224,7 +224,7 @@ class BasketConfig extends Component {
                         <BasketRefinePC loading={this.state.loading} handleShow={this.handleShow} products={this.state.products.length} saveBasket={this.saveBasket} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <MediaQuery maxWidth={1224}>
-                        <BasketRefineMobile  loading={this.state.loading} products={this.state.products.length} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
+                        <BasketRefineMobile handleShow={this.handleShow} loading={this.state.loading} products={this.state.products.length} handleSelect={this.handleSelect} submitRefiner={this.submitRefiner}/>
                     </MediaQuery>
                     <ul className={this.state.loading ? 'hidden': 'xyz'}>
                         <CircleLoader css={"display: block;margin: 0 auto;border-color: red;"} size={150} color={"var(--accent-1)"} loading={this.state.reloading}/>
