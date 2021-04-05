@@ -91,10 +91,10 @@ class App extends Component {
 	getLogo(){
         let x = localStorage.getItem("theme");
 		if(x === "dark"){
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogodark.png"
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "https://bestbasket.ddns.net/eshoplogodark.png"
 		}
 		else{
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "https://bestbasket.ddns.net/eshoplogolight.png"
 		}
     }
 	

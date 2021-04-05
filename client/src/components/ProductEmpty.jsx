@@ -12,7 +12,7 @@ class ProductEmpty extends Component {
                 "aldi": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/AldiWorldwideLogo.svg/500px-AldiWorldwideLogo.svg.png",
                 "sains": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Sainsbury%27s_Logo.svg",
                 "coop": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/The_Co-Operative_clover_leaf_logo.svg/500px-The_Co-Operative_clover_leaf_logo.svg.png",
-                "" : "EshopLogo1.png"
+                "" : "https://bestbasket.ddns.net/EshopLogo1.png"
             },
              visable: false,
              warn: false

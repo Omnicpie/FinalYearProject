@@ -18,12 +18,12 @@ class Settings extends Component {
         if (e.target.checked === true) {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark'); 
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogodark.png"
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "https://bestbasket.ddns.net/eshoplogodark.png"
         }
         else{
             document.documentElement.setAttribute('data-theme', 'light');
             localStorage.setItem('theme', 'light'); 
-			document.getElementsByClassName("navbar-brand")[0].children[0].src = "eshoplogolight.png"
+			document.getElementsByClassName("navbar-brand")[0].children[0].src = "https://bestbasket.ddns.net/eshoplogolight.png"
         } 
     }
 
