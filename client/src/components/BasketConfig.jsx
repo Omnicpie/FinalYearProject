@@ -18,6 +18,7 @@ class BasketConfig extends Component {
             reloading: false,
             show: false,
             showConfirm: false,
+            showError: false,
             price: 0,
 			currentUser: { username: "" },
             products: [
@@ -80,7 +81,18 @@ class BasketConfig extends Component {
         
         fetch("https://eshopapi.ddns.net/api/basket/find", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.refine)})
         .then(res=> res.json())
-        .then(res => this.setState({ loading:false,reloading:false, products: res.items, price: res.total }));
+        .then(res => {
+            if(res.items === undefined){
+                let i = []
+                for(let x =0; x < this.state.refine.products.length; x++){
+                    i.push({term: this.state.refine.products[x],found: false, item: {url: "", shop: "", product_name: "Something went wrong", product_price: "", product_additionals: ""}})
+                }
+                this.setState({ loading:false,reloading:false, products: i, price: 0})
+            }
+            else{
+                this.setState({ loading:false,reloading:false, products: res.items, price: res.total })
+            }
+        });
     }
 
     handleClick(event){
@@ -109,6 +121,12 @@ class BasketConfig extends Component {
         for(let i = 0; i < this.state.products.length; i++){
             terms[i] = this.state.products[i].term;
         }
+        let clear = true
+        for(let i = 1; i < 6; i++){
+            if (form[i].checked){
+                clear = false
+            }
+        }
         this.setState({
             refine: {
                 products: terms,
@@ -121,9 +139,15 @@ class BasketConfig extends Component {
                 },
                 delivery: form[6].checked ? 1 : 0
             },
-            reloading: true
+            reloading: true,
+            showError: clear
         }, () =>{
-            this.callFindAPI();
+            if(!clear){
+                this.callFindAPI();
+            }
+            else{
+                this.setState({reloading: false})
+            }
         });
         event.preventDefault();
     }
@@ -162,7 +186,7 @@ class BasketConfig extends Component {
                 user: this.state.currentUser,
                 overwrite: this.state.save.overwrite,
                 price: this.state.price
-            },
+            }
         }, () =>{
             this.callSaveAPI();
             this.handleClose();
@@ -191,9 +215,16 @@ class BasketConfig extends Component {
         // Logic for displaying current products    
         
 
-        const renderproducts = products.map((product , key) => {
-            return <ProductEmpty key={key} product={product} prodKey={key} removeSelf={this.removeSelf}/>;
-        });
+        let renderproducts = <p></p>;
+        try{
+            renderproducts = products.map((product , key) => {
+                return <ProductEmpty key={key} product={product} prodKey={key} removeSelf={this.removeSelf}/>;
+            });
+        }
+        catch{
+            renderproducts = <p>Oh No, something went very wrong, please reload</p>
+            this.setState({products: []})
+        }
 
        
         return (
@@ -221,6 +252,7 @@ class BasketConfig extends Component {
                     <p style={{width: "max-content", height: "max-content", margin: "auto 0"}}>Total Price: £{this.state.price}</p>
                     <input type="submit" value="Find Best Basket!" className="button" form="x1" style={{width: "max-content", margin: "auto 10pt auto auto", height: "max-content"}}></input>
                 </div>
+                <div className={this.state.showError ? 'confirmation alert alert-danger': 'hidden'}><FaExclamationCircle/>No Shops Selected!</div>
                 <div className={this.state.showConfirm ? 'confirmation alert alert-success': 'hidden'}><FaExclamationCircle/>Basket Saved</div>
             </div>
         );

@@ -6,6 +6,7 @@ import CircleLoader from "react-spinners/CircleLoader";
 import MediaQuery from "react-responsive";
 import BrowseRefinePC from "./BrowseRefinePC";
 import BrowseRefineMobile from "./BrowseRefineMobile";
+import { FaExclamationCircle } from 'react-icons/fa';
 
 class Browse extends Component {
     constructor() {
@@ -13,6 +14,7 @@ class Browse extends Component {
         this.state = {
             loading: true,
             reloading: false,
+            showError: false,
             products: [],
             refine: {
                 term: "",
@@ -137,6 +139,12 @@ class Browse extends Component {
 
     submitRefiner(event){
         let form = event.target;
+        let clear = true
+        for(let i = 1; i < 6; i++){
+            if (form[i].checked){
+                clear = false
+            }
+        }
         this.setState({
             refine: {
                 term: form[0].value,
@@ -149,8 +157,14 @@ class Browse extends Component {
                 },
                 orderby: this.state.refine.orderby
             },
+            showError: clear
         }, () =>{
-            this.callAPI();
+            if(!clear){
+                this.callAPI();
+            }
+            else{
+                this.setState({reloading: false})
+            }
         });
         event.preventDefault();
     }
@@ -239,6 +253,7 @@ class Browse extends Component {
                     {pageIncrementBtn}
                     {renderNextBtn}
                 </ul>
+                <div className={this.state.showError ? 'confirmation alert alert-danger': 'hidden'}><FaExclamationCircle/>No Shops Selected!</div>
             </div>
         );
     }

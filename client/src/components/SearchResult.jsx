@@ -17,7 +17,12 @@ class SearchResult extends Component {
         fetch("https://eshopapi.ddns.net/api/search", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.search)})
             .then(res => res.json())
             .then(res => {
-                this.setState({ loading:false,reloading:false, results: res})
+                if (res.length !== 0){
+                    this.setState({ loading:false,reloading:false, results: res})
+                }
+                else{
+                    this.setState({loading:false,reloading:false,results: [{url: "", product_name: "No Products Found for that name", product_price: "", product_additionals: "Search again for more results"}]})
+                }
             })
             .catch(err => {
                 this.setState({loading:false,reloading:false,results: [{url: "", product_name: "No Products Found for that name", product_price: "", product_additionals: "Search again for more results"}]})

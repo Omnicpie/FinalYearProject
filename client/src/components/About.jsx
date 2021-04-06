@@ -39,7 +39,7 @@ class About extends Component {
                     <li className="shopList"><a href="https://coop.co.uk/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/The_Co-Operative_clover_leaf_logo.svg/500px-The_Co-Operative_clover_leaf_logo.svg.png" alt="CO-OP" className="ShopIcon" style={{color: "var(--text-1)", marginRight:"15pt", height: "35px"}}/></a></li>
                 </ul>
                 <p style={{width: "90%", margin: "auto"}}>We update our prices regularly to keep our information as accurate as possible.<br/>Below are the most recent updates for each shop:</p>
-                <ul style={{textAlign: 'center'}}>{shopUpdates}</ul>
+                <ul style={{textAlign: 'center', listStyle: "none"}}>{shopUpdates}</ul>
                 <div style={{width: "95%", margin: "auto"}}> 
                     <h2>Delivery Information</h2>
                     <p>All providers have their delivery information on their own systems, we try to keep ours as accurate but it may not always be perfect, currently we have the following for shop delivery information that we use when finding the Best Basket</p>

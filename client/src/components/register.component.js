@@ -54,11 +54,13 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangePassword2 = this.onChangePassword2.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      password2: "",
       successful: false,
       message: ""
     };
@@ -82,6 +84,12 @@ export default class Register extends Component {
     });
   }
 
+  onChangePassword2(e) {
+    this.setState({
+      password2: e.target.value
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -91,8 +99,16 @@ export default class Register extends Component {
     });
 
     this.form.validateAll();
+    let checkPass = true
+    if(this.state.password !== this.state.password2){
+      checkPass = false
+      this.setState({
+        message: "Passwords Do not match",
+        successful: false
+      });
+    }
 
-    if (this.checkBtn.context._errors.length === 0) {
+    if (this.checkBtn.context._errors.length === 0 && checkPass === true) {
       AuthService.register(
         this.state.username,
         this.state.email,
@@ -170,6 +186,18 @@ export default class Register extends Component {
                     validations={[required, vpassword]}
                   />
                 </div>
+
+                <div className="form-group">
+                  <label htmlFor="password2">Confirm Password</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="password2"
+                    value={this.state.password2}
+                    onChange={this.onChangePassword2}
+                    validations={[required, vpassword]}
+                  />
+                </div>
                 <div style={{fontSize: "7pt"}}>By Signing up you agree to our <Link to="/cookies">cookie policy</Link>, and to storing the details given above in accordence with <a href="https://www.legislation.gov.uk/ukpga/2018/12/contents/enacted">DPA 2018</a>.</div>
                 <div className="form-group">
                   <button className="button b-alt" style={{width:"100%"}}>Sign Up</button>
@@ -189,6 +217,7 @@ export default class Register extends Component {
                 >
                   {this.state.message}
                 </div>
+                {this.state.successful ? <Link to="/login" className="button b-alt" style={{display: "block", textAlign: "center"}}>Login</Link>: null}
               </div>
             )}
             <CheckButton
