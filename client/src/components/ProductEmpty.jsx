@@ -107,9 +107,14 @@ class ProductEmpty extends Component {
                 <div style={{ borderLeft: '1px solid #dbdbdb', marginRight: '20px' }}></div>
                 <div className="InfoSec">
                     {(this.props.product.found) ?
-			        <div>
-                        <p>{this.props.product.item.product_name}</p>
-                        <p style={{fontSize: "0.8em"}}>Price: {this.props.product.item.product_price}</p>
+			        <div style={{display: "flex"}}>
+                        <div style={{width: "80%"}}>
+                            <p>{this.props.product.item.product_name}</p>
+                            <p style={{fontSize: "0.8em"}}>Price: {this.props.product.item.product_price}</p>
+                        </div>
+                        <div style={{margin:"auto 0 auto auto", height: "max-content"}}>
+                            <a href={this.props.product.item.url} target="_blank" rel="noreferrer" className="nav-link"><div className="btn btn-secondary">Click to View!</div></a>
+                        </div>
                     </div>
                     :  
                     <div>
