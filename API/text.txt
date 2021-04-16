@@ -1,0 +1,12 @@
+rv[('tesco', 'https://www.tesco.com/groceries/en-GB/products/270614379', 'Gt85 Spray Lubricant 400Ml', '£ 3.00', '£3.00/each'), ('asda', 'https://groceries.asda.com/product/910000261045', 'KY Jelly Personal Lubricant 50ML', '£3.45', '(£6.90/100ml)'), ('asda', 'https://groceries.asda.com/product/1000017017723', 'Muc Off All Weather Chain Lubricant', '£7.00', '(£1.75/100ml)'), ('asda', 'https://groceries.asda.com/product/1000028748713', 'WD-40 Bike All Weather Lubricant', '£5.00', '(£2.00/100ml)')]
+
+
+json_data[{'shop': 'tesco', 'url': 'https://www.tesco.com/groceries/en-GB/products/270614379', 'product_name': 'Gt85 Spray Lubricant 400Ml', 'product_price': '£ 3.00', 'product_additionals': '£3.00/each'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/910000261045', 'product_name': 'KY Jelly Personal Lubricant 50ML', 'product_price': '£3.45', 'product_additionals': '(£6.90/100ml)'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/1000017017723', 'product_name': 'Muc Off All Weather Chain Lubricant', 'product_price': '£7.00', 'product_additionals': '(£1.75/100ml)'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/1000028748713', 'product_name': 'WD-40 Bike All Weather Lubricant', 'product_price': '£5.00', 'product_additionals': '(£2.00/100ml)'}]
+
+
+x[{'shop': 'tesco', 'url': 'https://www.tesco.com/groceries/en-GB/products/270614379', 'product_name': 'Gt85 Spray Lubricant 400Ml', 'product_price': '£ 3.00', 'product_additionals': '£3.00/each'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/1000017017723', 'product_name': 'Muc Off All Weather Chain Lubricant', 'product_price': '£7.00', 'product_additionals': '(£1.75/100ml)'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/1000028748713', 'product_name': 'WD-40 Bike All Weather Lubricant', 'product_price': '£5.00', 'product_additionals': '(£2.00/100ml)'}, {'shop': 'asda', 'url': 'https://groceries.asda.com/product/910000261045', 'product_name': 'KY Jelly Personal Lubricant 50ML', 'product_price': '£3.45', 'product_additionals': '(£6.90/100ml)'}]
+
+
+bestFromShops[[{'shop': 'asda', 'url': 'https://groceries.asda.com/product/1000017017723', 'product_name': 'Muc Off All Weather Chain Lubricant', 'product_price': '£7.00', 'product_additionals': '(£1.75/100ml)'}], [], [{'shop': 'tesco', 'url': 'https://www.tesco.com/groceries/en-GB/products/270614379', 'product_name': 'Gt85 Spray Lubricant 400Ml', 'product_price': '£ 3.00', 'product_additionals': '£3.00/each'}], [], []]
+
+

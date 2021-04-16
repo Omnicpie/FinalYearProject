@@ -41,8 +41,6 @@ def searchBestFromShops(items, shops):
     return output
 
 def findBestBasket(products, delivery, shops):
-    prods = []
-    terms = []
     minPrice = 10000
     bestBasket = {} 
     try:
@@ -105,7 +103,9 @@ def findBestBasket(products, delivery, shops):
         if((shops[0] == "0" or shops[0] == "1" ) and (shops[1] == "0" or shops[1] == "1" ) and shops[2] == "1" and (shops[3] == "0" or shops[3] == "1" ) and (shops[4] == "0" or shops[4] == "1" )):
             goingTotal = 0
             items = []
-            for item in prods: 
+            for tem in products:
+                item = tem[0]
+                term = tem[1]
                 #print(term)
                 if item[2]: 
                     price = item[2][0]["product_price"]
@@ -126,7 +126,9 @@ def findBestBasket(products, delivery, shops):
         if((shops[0] == "0" or shops[0] == "1" ) and (shops[1] == "0" or shops[1] == "1" ) and (shops[2] == "0" or shops[2] == "1" ) and shops[3] == "1" and (shops[4] == "0" or shops[4] == "1" )):
             goingTotal = 0
             items = []
-            for item in prods: 
+            for tem in products:
+                item = tem[0]
+                term = tem[1]
                 #print(term)
                 if item[3]: 
                     price = item[3][0]["product_price"]
@@ -146,7 +148,9 @@ def findBestBasket(products, delivery, shops):
         if((shops[0] == "0" or shops[0] == "1" ) and (shops[1] == "0" or shops[1] == "1" ) and (shops[2] == "0" or shops[2] == "1" ) and (shops[3] == "0" or shops[3] == "1" ) and shops[4] == "1"):
             goingTotal = 0
             items = []
-            for item in prods: 
+            for tem in products:
+                item = tem[0]
+                term = tem[1]
                 #print(term)
                 if item[4]: 
                     price = item[4][0]["product_price"]
@@ -1326,13 +1330,31 @@ try:
         for result in mycursor.stored_results():
             row_headers=[x[0] for x in result.description]
             rv = result.fetchall()
+            thing = prodterm + "bask.txt"
+            f = open(thing, "w")
+            f.write("rv")
+            f.write(str(rv))
+            f.write("\n\n\n")
             json_data=[]
             for result in rv:
                 json_data.append(dict(zip(row_headers,result)))
+            f.write("json_data")
+            f.write(str(json_data))
+            f.write("\n\n\n")
             x = script.searchFromBrowse(json_data, prodterm)
+            f.write("x")
+            f.write(str(x))
+            f.write("\n\n\n")
             bestFromShops = searchBestFromShops(x, shops)
+            f.write("bestFromShops")
+            f.write(str(bestFromShops))
+            f.write("\n\n\n")
+            f.close()
             items.append((bestFromShops, prodterm))
     # TO STOP CALCULATION TAKE FOREVER GO MORE SIMPLE WHERE MORE THAN 5 PRODUCTS TO FIND
+    f=open("xxxx.txt", "w")
+    f.write(str(items))
+    f.close()
     if(len(items) > 4):
         output = [] 
         total = 0.00
@@ -1355,6 +1377,9 @@ try:
         bestBasket = {"items": output, "total": total}
     else:
         bestBasket = findBestBasket(items, sys.argv[6], shops)
+        f=open("xxxx2.txt", "w")
+        f.write(str(bestBasket))
+        f.close()
     print(json.dumps(bestBasket))
 except Exception as e:
     exc_type, exc_obj, exc_tb = sys.exc_info()
