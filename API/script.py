@@ -92,17 +92,8 @@ def main():
     lines = sys.stdin.readlines()
     products = json.loads(lines[0])
     term = sys.argv[1]
-    f = open("x2.txt", "w")
-    f.write(term)
-    f.write("\n\n")
     productsChecked = checkAdditionals(products)
-    f.write("Prod_checked\n")
-    f.write(str(productsChecked))
-    f.write("\n\n")
     groupedSets = groupTypes(productsChecked, term)
-    f.write("grouped\n")
-    f.write(str(groupedSets))
-    f.write("\n\n")
     groupedSets[0].sort(key=sortElem)
     groupedSets[1].sort(key=sortElem)
     groupedSets[2].sort(key=sortElem)
@@ -121,26 +112,13 @@ def main():
         end = len(finalOrder)-1
     else:
         end = 30
-    f.write("final\n")
-    f.write(str(finalOrder))
-    f.write("\n\n")
     print(json.dumps(finalOrder[0:end]))
     return json.dumps(finalOrder[0:end])
 
 
 def searchFromBrowse(products, term):
-    termFile = term + ".txt"
-    f = open(termFile, "w")
-    f.write(term)
-    f.write("\n\n")
     productsChecked = checkAdditionals(products)
-    f.write("Prod_checked\n")
-    f.write(str(productsChecked))
-    f.write("\n\n")
     groupedSets = groupTypes(productsChecked, term)
-    f.write("grouped\n")
-    f.write(str(groupedSets))
-    f.write("\n\n")
     groupedSets[0].sort(key=sortElem)
     groupedSets[1].sort(key=sortElem)
     groupedSets[2].sort(key=sortElem)
@@ -158,10 +136,6 @@ def searchFromBrowse(products, term):
         end = len(finalOrder)-1
     else:
         end = 30
-    f.write("final\n")
-    f.write(str(finalOrder))
-    f.write("\n\n")
-    f.close()
     return finalOrder
 
 if(sys.argv[0] == "/home/pi/Documents/API/FinalYearProject/API/script.py"):
