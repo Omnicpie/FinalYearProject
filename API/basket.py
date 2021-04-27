@@ -1,6 +1,9 @@
 import mysql.connector, sys, json, os, re, itertools, traceback
 import importlib
-script = importlib.import_module("script")
+#import search file for later use
+search = importlib.import_module("search")
+
+#connect to sql server
 mydb = mysql.connector.connect(
   host="localhost",
   user="api",
@@ -10,9 +13,9 @@ mydb = mysql.connector.connect(
 
 ##  ARGS----- FILE, ASDA, COOP, TESCO, ALDI, SAINS, DELIVERY
 
+#if a shop selected, finds the best item for that shop and appends to output
 def searchBestFromShops(items, shops):
     output = [[], [], [], [], []]
-    #
     if(shops[0] == "1"):
         for item in items:
             if(item["shop"] == "asda"):
@@ -40,9 +43,20 @@ def searchBestFromShops(items, shops):
                 break
     return output
 
+#knapsack type algorithm for finding best basket
 def findBestBasket(products, delivery, shops):
     minPrice = 10000
     bestBasket = {} 
+    ##general rule, 
+    # checks through each product, 
+    # adds to a running total
+    # after all products added, checks for delivery condition and adds that to total if necessary
+    # check that running total against current lowest
+    # if lower, sets that running total to lowest and sets bestbasket to be output.
+
+
+    # Checks through different shop combinations 
+    # if that shop isnt selected then its combinations are not checked to save computation time
     try:
         if(shops[0] == "0" and shops[1] == "0" and shops[2] == "0" and shops[3] == "0" and shops[4] == "0"):
             items = []
@@ -1312,17 +1326,19 @@ def findBestBasket(products, delivery, shops):
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    #returns the bestbasket json
     return bestBasket
 
 try:
     output = []
     items = []
+    # reads stdin for product terms
     lines = sys.stdin.readlines()
-    ##print(str(sys.argv))
     mycursor = mydb.cursor()
+    #gets which shops are wanted and the delivery option
     shops = sys.argv[1::]
-    ##print(str(shops))
     total = 0
+    #gets products for each term and adds it to list
     for x in lines:
         prodterm = x[0:-1]
         #Call Browse (asda, coop, tesco, aldi, sainsburys, PRODUCT TERM)
@@ -1331,15 +1347,19 @@ try:
             row_headers=[x[0] for x in result.description]
             rv = result.fetchall()
             json_data=[]
+            #converts db output to json which search algorithm understands
             for result in rv:
                 json_data.append(dict(zip(row_headers,result)))
-            x = script.searchFromBrowse(json_data, prodterm)
+            #runs search algorithm
+            x = search.searchFromBrowse(json_data, prodterm)
+            #finds each shops best products are
             bestFromShops = searchBestFromShops(x, shops)
             items.append((bestFromShops, prodterm))
     # TO STOP CALCULATION TAKE FOREVER GO MORE SIMPLE WHERE MORE THAN 5 PRODUCTS TO FIND
     if(len(items) > 4):
         output = [] 
         total = 0.00
+        #goes through each item, if it is cheapest that set to that product otherwise no change.
         for i in items:
             curMin = 1000
             cheapestitem = False
@@ -1355,10 +1375,14 @@ try:
                 curMin = round(curMin, 2)
                 total += curMin
                 output.append({"term": i[1], "found": True, "item": cheapestitem})
+        #rounds total to 2 dp as sometimes python can have some weird float issues.
         total = round(total, 2)
+        #sets best basket to be json output for sending
         bestBasket = {"items": output, "total": total}
     else:
+        #runs algorithm to get bestbasket
         bestBasket = findBestBasket(items, sys.argv[6], shops)
+    #sends best basket to user. 
     print(json.dumps(bestBasket))
 except Exception as e:
     exc_type, exc_obj, exc_tb = sys.exc_info()

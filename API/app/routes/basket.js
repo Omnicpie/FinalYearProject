@@ -35,7 +35,10 @@ module.exports =  function(app) {
 	});
 
     app.post("/api/basket/save", (req, res)=>{
+        console.log("-----------------")
+        console.log("BASKET SAVE")
         console.log(req.body)
+        console.log("-----------------")
         if(req.body.type === "new"){
             let basketQuery = "INSERT saved_basket(user_id, price, name) VALUES ('"+req.body.user.display_name+"','"+req.body.price+"','"+req.body.name+"')"
             db.sequelize.query(basketQuery).then(basket=>{
@@ -167,6 +170,7 @@ module.exports =  function(app) {
         });
     });
 
+    //the old find system, back up for is algo ever fails
     app.post("/api/basket/findv1", async (req, res)=>{
         let productTerms = req.body.products;
         console.log(req.body)
@@ -196,6 +200,8 @@ module.exports =  function(app) {
 
 
     app.post("/api/basket/find", (req, res)=>{
+		console.log("-----------------")
+		console.log("BASKET FIND")
         console.log(req.body)
         let productTerms = req.body.products;
 		let log = []
@@ -208,7 +214,7 @@ module.exports =  function(app) {
         python.stdin.end();
 
         python.stdout.on('data', function (data) {
-            console.log('Pipe data from python script ...');
+            console.log('Pipe data from python script...');
             dataToSend = data.toString();
             log.push(dataToSend)
         });
@@ -217,7 +223,9 @@ module.exports =  function(app) {
         
         python.on('close', (code, signal) => {
             console.log(`child process close all stdio with code ${code} and signal ${signal}`);
+            console.log("sending response")
             res.send(log[0]);
+            console.log("-----------------")
         });
         
         python.on('uncaughtException', (err, origin) => {
