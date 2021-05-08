@@ -12,8 +12,8 @@ All assumed that files are downloaded
 
 1. Open Command Line and navigate to API (cd API/)
 2. call npm init
-3. call npm start
-4. webserver should be active on http://localhost:3000/
+3. call node server
+4. webserver should be active on http://localhost:8080/
 
 
 ### Website 
