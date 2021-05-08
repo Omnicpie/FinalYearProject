@@ -2,7 +2,7 @@ from github import Github
 import subprocess as cmd
 
 #this will be for reading it later 
-g = Github('c8cdca51b807bd38105cb5d4012ac1d738664bc1')
+g = Github('')#DETAILS REMOVED FOR SECURITY
 
 repo = g.get_user().get_repo("FinalYearProds")
 print(repo.name)

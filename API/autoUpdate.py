@@ -8,11 +8,12 @@ from datetime import datetime
 def uploadSQL(shop, data):
    #connects to DB
     mydb = mysql.connector.connect(
-      host="localhost",
-      user="ryan",
-      password="p0K8c&5B5KiY",
-      database="eshop"
-    )
+      host="",
+      user="",
+      password="",
+      database=""
+    )# DETAILS REMOVED FOR SECURITY
+    
     cursor = mydb.cursor()
     #deletes all data currently available in the shop
     clear = "DELETE FROM "+shop
@@ -40,7 +41,7 @@ def uploadSQL(shop, data):
     print(shop, "| ",count, " record(S) inserted")
 
 #logs into the github here products are automatically stored
-g = Github('c8cdca51b807bd38105cb5d4012ac1d738664bc1')
+g = Github('') #DETAILS REMOVED FOR SECURITY
 
 repo = g.get_user().get_repo("FinalYearProds")
 d = repo.get_contents("")

@@ -1,8 +1,8 @@
 module.exports = {
-    HOST: "localhost",
-    USER: "api",
-    PASSWORD: "eshopAPI%pass1",
-    DB: "eshop",
+    HOST: "",
+    USER: "",
+    PASSWORD: "",
+    DB: "",
     dialect: "mysql",
     pool: {
         max: 5,
@@ -11,3 +11,4 @@ module.exports = {
         idle: 10000
     }
 };
+//DETAILS REMOVED FOR SECURITY
