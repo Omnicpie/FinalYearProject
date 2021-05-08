@@ -1,4 +1,4 @@
-# FinalYearProject
+# FinalYearProject:  Eshop for Supermarkets
 
 
 Ryan Anderson
