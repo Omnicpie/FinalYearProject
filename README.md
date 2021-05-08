@@ -52,3 +52,7 @@ Basket.py //Basket configurator
 search.py //Search choice
 
 ```
+
+
+## NOTE THAT PERSONAL DETAILS ARE REMOVED SO WILL NOT CONNECT TO DATABASES FOR BACKEND SYSTEM
+The Auto update system will also not function
