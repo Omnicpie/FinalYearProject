@@ -21,7 +21,7 @@ async function getProd(prodterm){
     let u = {}
     await db.sequelize.query(query).then(out => {
         u = out[0]
-    });
+    }).catch(function (err) { res.send([])});
     return u
 }
 
@@ -67,7 +67,7 @@ module.exports =  function(app) {
                     }
                     db.sequelize.query(prodQuery)
                 }
-            });
+            }).catch(function (err) { res.send([])});
         }
         else if(req.body.type === "overwrite"){
             let basketQuery = "UPDATE saved_basket SET price='"+req.body.price+"' WHERE id="+req.body.overwrite

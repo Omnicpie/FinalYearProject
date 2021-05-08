@@ -33,8 +33,8 @@ module.exports = function(app) {
             break;
         }
 
-        
-        db.sequelize.query(query).then(out => res.send(out));
+        db.sequelize.query(query).then(out => res.send(out)).catch(function (err) { res.send([])});
+      
     });
 
     

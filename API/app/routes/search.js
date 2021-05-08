@@ -43,7 +43,7 @@ module.exports = function(app) {
 				  `Exception origin: ${origin}`
 				);
 			  });
-		});
+		}).catch(function (err) { res.send([])});
 
 		
 	});
