@@ -21,7 +21,7 @@ All assumed that files are downloaded
 1. Open Command Line and navigate to client (cd client/)
 2. call npm init
 3. call npm start
-4. webserver should be active on http://localhost:9000/
+4. webserver should be active on http://localhost:3000/
 
 
 ### Database
