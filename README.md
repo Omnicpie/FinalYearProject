@@ -1,12 +1,14 @@
 # FinalYearProject:  Eshop for Supermarkets
 
-
-Ryan Anderson
-201216441
-
-
 ## Installation
 All assumed that files are downloaded
+
+### Prerequisites
+* nodejs 
+* npm
+* react
+* SQL
+* python
 
 ### Webserver
 
