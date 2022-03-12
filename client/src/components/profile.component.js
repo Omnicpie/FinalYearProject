@@ -4,68 +4,94 @@ import AuthService from "../services/auth.service";
 import Basket from "./Basket";
 
 export default class Profile extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			redirect: null,
-			userReady: false,
-			currentUser: { username: "" },
-			savedBaskets: [],
-			loading: true,
-			reloading: false
-		};
-		this.deleteBasket = this.deleteBasket.bind(this);
-	}
-	getBaskets(){
-			fetch("https://eshopapi.ddns.net/api/basket/get/all", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify(this.state.currentUser)})
-			.then(res=> res.json())
-			.then(res => this.setState({ loading:false,reloading:false, savedBaskets: res }));
-	}
+    this.state = {
+      redirect: null,
+      userReady: false,
+      currentUser: { username: "" },
+      savedBaskets: [],
+      loading: true,
+      reloading: false,
+    };
+    this.deleteBasket = this.deleteBasket.bind(this);
+  }
+  getBaskets() {
+    fetch("https://eshopapi.ryananderson.uk/api/basket/get/all", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.currentUser),
+    })
+      .then((res) => res.json())
+      .then((res) =>
+        this.setState({ loading: false, reloading: false, savedBaskets: res })
+      );
+  }
 
-	deleteBasket(event){
-		fetch("https://eshopapi.ddns.net/api/basket/delete", {method: 'POST', headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}, body: JSON.stringify({basket: event.target.id})})
-			.then(res=> this.setState({loading: true}, () => {
-				this.getBaskets()
-			}));
-	}
+  deleteBasket(event) {
+    fetch("https://eshopapi.ryananderson.uk/api/basket/delete", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ basket: event.target.id }),
+    }).then((res) =>
+      this.setState({ loading: true }, () => {
+        this.getBaskets();
+      })
+    );
+  }
 
-	componentDidMount() {
-		const currentUser = AuthService.getCurrentUser();
+  componentDidMount() {
+    const currentUser = AuthService.getCurrentUser();
 
-		if (!currentUser) this.setState({ redirect: "/home" });
-		this.setState({ currentUser: currentUser, userReady: true }, () =>{
-			this.getBaskets()
-		})
-	}
+    if (!currentUser) this.setState({ redirect: "/home" });
+    this.setState({ currentUser: currentUser, userReady: true }, () => {
+      this.getBaskets();
+    });
+  }
 
-	render() {
-		if (this.state.redirect) {
-			return <Redirect to={this.state.redirect} />
-		}
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
 
-		const { currentUser, savedBaskets } = this.state;
-		const renderSaved = savedBaskets.map((basket) => {
-			return <Basket key={basket.value} basket={basket} deleteBasket={this.deleteBasket}/>
-		});
+    const { currentUser, savedBaskets } = this.state;
+    const renderSaved = savedBaskets.map((basket) => {
+      return (
+        <Basket
+          key={basket.value}
+          basket={basket}
+          deleteBasket={this.deleteBasket}
+        />
+      );
+    });
 
-		return (
-		<div className="container">
-			{(this.state.userReady) ?
-			<div>
-				<header className="jumbotron">
-					<h3>
-						<strong>{currentUser.display_name}</strong>'s Profile
-					</h3>
-					<Link to="/settings" className="button">Edit Settings</Link>
-				</header>
-				<hr/>
-			</div>: null}
-			<div>
-					<h2>Saved Baskets</h2>
-					{renderSaved}
-			</div>
-		</div>
-		);
-	}
+    return (
+      <div className="container">
+        {this.state.userReady ? (
+          <div>
+            <header className="jumbotron">
+              <h3>
+                <strong>{currentUser.display_name}</strong>'s Profile
+              </h3>
+              <Link to="/settings" className="button">
+                Edit Settings
+              </Link>
+            </header>
+            <hr />
+          </div>
+        ) : null}
+        <div>
+          <h2>Saved Baskets</h2>
+          {renderSaved}
+        </div>
+      </div>
+    );
+  }
 }

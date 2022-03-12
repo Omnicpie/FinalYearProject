@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const API_URL = "https://eshopapi.ddns.net/api/auth/";
+const API_URL = "https://eshopapi.ryananderson.uk/api/auth/";
 
 class AuthService {
   login(display_name, password) {
     return axios
       .post(API_URL + "signin", {
         display_name,
-        password
+        password,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
@@ -26,12 +26,12 @@ class AuthService {
     return axios.post(API_URL + "signup", {
       display_name,
       email,
-      password
+      password,
     });
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return JSON.parse(localStorage.getItem("user"));
   }
 }
 
